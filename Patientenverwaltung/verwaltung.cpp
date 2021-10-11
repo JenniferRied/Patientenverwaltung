@@ -7,8 +7,10 @@ Verwaltung::Verwaltung(QWidget *parent) :
     ui(new Ui::Verwaltung)
 {
     ui->setupUi(this);
-    std::string title;
     title = ui->titel_textEdit->toPlainText().toStdString();
+    lastname = ui->titel_textEdit->toPlainText().toStdString();
+    firstname = ui->titel_textEdit->toPlainText().toStdString();
+    place = ui->titel_textEdit->toPlainText().toStdString();
     //Patient::set_titel(title);
 
 }
