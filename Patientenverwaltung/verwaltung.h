@@ -18,6 +18,14 @@ public:
     std::string lastname;
     std::string firstname;
     std::string place;
+    std::string street;
+    int housenumber;
+    int id;
+    int region_code;
+    char sex;
+
+public slots:
+    void save();
 
 private:
     Ui::Verwaltung *ui;

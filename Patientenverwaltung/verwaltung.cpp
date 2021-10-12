@@ -12,13 +12,15 @@ Verwaltung::Verwaltung(QWidget *parent) :
     firstname = ui->vorname_textEdit->toPlainText().toStdString();
     place = ui->ort_textEdit->toPlainText().toStdString();
     street = ui->strasse_textEdit->toPlainText().toStdString();
-    //Patient::set_titel(title);
+    housenumber = ui->hnr_textEdit->toPlainText().toInt();
+    region_code = ui->plz_textEdit->toPlainText().toInt();
+    //sex = ui->geschlecht_comboBox;
     connect(ui->buttonBox,SIGNAL (accepted()),this, SLOT (save()));
 }
 
 void Verwaltung::save()
 {
-
+    //Patient::set_titel(title);
 }
 
 
