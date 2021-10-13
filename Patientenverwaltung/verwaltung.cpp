@@ -14,7 +14,8 @@ Verwaltung::Verwaltung(QWidget *parent) :
     geschlecht.append("m");
     geschlecht.append("d");
     ui->geschlecht_comboBox->addItems(geschlecht);
-    connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (change(QDate)));
+    connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (datechange()));
     connect(ui->nachname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->vorname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->ort_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
@@ -28,6 +29,11 @@ Verwaltung::Verwaltung(QWidget *parent) :
 void Verwaltung::save()
 {
     //Patient::set_titel(title);
+}
+
+void Verwaltung::datechanged(QDate)
+{
+    change();
 }
 
 void Verwaltung::textchange(QString)
@@ -46,6 +52,7 @@ void Verwaltung::change()
     region_code = ui->plz_textEdit->toPlainText().toInt();
     phone = ui->tel_nr_textEdit->toPlainText();
     sex = ui->geschlecht_comboBox->currentText();
+    geb = ui->geb_dateEdit->date();
     QString hnr = " ";
     QString regc = " ";
     QString geschl = " ";
@@ -69,7 +76,12 @@ void Verwaltung::change()
     {
         regc = QString::number(region_code);
     }
-    ui->eingaben->setText(title +" "+ firstname +" "+ lastname +"\n"+ geschl +"\n"+ street +" "+ hnr +"\n"+ regc +" "+ place +"\n"+ phone);
+    QString birthday = geb.toString();
+    int birth_year = geb.year();
+    int current_year = QDate::currentDate().year();
+    int alter = current_year - birth_year;
+    QString age = QString::number(alter);
+    ui->eingaben->setText(title +" "+ firstname +" "+ lastname +"\n"+ birthday +"("+ age +") \n"+ geschl +"\n"+ street +" "+ hnr +"\n"+ regc +" "+ place +"\n"+ phone);
 }
 
 

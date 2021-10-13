@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QLabel>
+#include <QDate>
 
 namespace Ui {
 class Verwaltung;
@@ -21,6 +22,7 @@ public:
     QString place;
     QString street;
     QString phone;
+    QDate geb;
     int housenumber;
     int id;
     int region_code;
@@ -31,6 +33,7 @@ public slots:
     void save();
     void change();
     void textchange(QString);
+    void datechanged(QDate);
 
 private:
     Ui::Verwaltung *ui;

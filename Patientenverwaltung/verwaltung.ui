@@ -133,6 +133,12 @@
      <height>26</height>
     </rect>
    </property>
+   <property name="displayFormat">
+    <string>dd.MM.yyyy</string>
+   </property>
+   <property name="calendarPopup">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
@@ -254,7 +260,7 @@
     <rect>
      <x>160</x>
      <y>250</y>
-     <width>251</width>
+     <width>51</width>
      <height>25</height>
     </rect>
    </property>
