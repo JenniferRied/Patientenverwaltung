@@ -6,10 +6,10 @@ Patient::Patient(QString titel,
                  QString vorname,
                  QString strasse,
                  QString ort,
+                 QString tel,
                  int hnr,
                  int plz,
                  int patient_id,
-                 double tel,
                  char geschlecht)
 {
 

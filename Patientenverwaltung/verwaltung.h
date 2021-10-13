@@ -20,16 +20,16 @@ public:
     QString firstname;
     QString place;
     QString street;
+    QString phone;
     int housenumber;
     int id;
     int region_code;
     char sex;
-    double phone;
+
 
 public slots:
     void save();
-    void control();
-
+    void change();
 private:
     Ui::Verwaltung *ui;
 };

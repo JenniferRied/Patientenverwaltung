@@ -259,30 +259,23 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="kontrollausgabe">
+  <widget class="QLabel" name="eingaben">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>120</y>
-     <width>67</width>
-     <height>17</height>
+     <x>450</x>
+     <y>40</y>
+     <width>251</width>
+     <height>151</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>240</y>
-     <width>89</width>
-     <height>25</height>
-    </rect>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
-   <property name="text">
-    <string>PushButton</string>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
