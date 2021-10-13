@@ -2,6 +2,7 @@
 #define VERWALTUNG_H
 
 #include <QDialog>
+#include <QLabel>
 
 namespace Ui {
 class Verwaltung;
@@ -14,18 +15,20 @@ class Verwaltung : public QDialog
 public:
     explicit Verwaltung(QWidget *parent = nullptr);
     ~Verwaltung();
-    std::string title;
-    std::string lastname;
-    std::string firstname;
-    std::string place;
-    std::string street;
+    QString title;
+    QString lastname;
+    QString firstname;
+    QString place;
+    QString street;
     int housenumber;
     int id;
     int region_code;
     char sex;
+    double phone;
 
 public slots:
     void save();
+    void control();
 
 private:
     Ui::Verwaltung *ui;

@@ -1,10 +1,11 @@
 #include "patient.h"
+#include <QList>
 
-Patient::Patient(std::string titel,
-                 std::string nachname,
-                 std::string vorname,
-                 std::string strasse,
-                 std::string ort,
+Patient::Patient(QString titel,
+                 QString nachname,
+                 QString vorname,
+                 QString strasse,
+                 QString ort,
                  int hnr,
                  int plz,
                  int patient_id,
