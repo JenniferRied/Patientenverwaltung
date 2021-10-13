@@ -17,6 +17,8 @@ public:
                 int patient_id,
                 QString geschlecht);
 
+        void save_patient();
+
         //get-funktionen
         QString get_titel(){return titel;}
         QString get_nachname(){return nachname;}

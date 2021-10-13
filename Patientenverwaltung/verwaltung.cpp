@@ -28,7 +28,9 @@ Verwaltung::Verwaltung(QWidget *parent) :
 }
 void Verwaltung::save()
 {
-    //Patient::set_titel(title);
+    Patient patient(ui->titel_textEdit->toPlainText(),ui->nachname_textEdit->toPlainText(), ui->vorname_textEdit->toPlainText(), ui->strasse_textEdit->toPlainText(),
+                    ui->ort_textEdit->toPlainText(),ui->tel_nr_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),1,'w');
+    patient.save_patient();
 }
 
 void Verwaltung::datechanged(QDate)

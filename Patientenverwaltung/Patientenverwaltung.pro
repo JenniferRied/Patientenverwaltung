@@ -23,11 +23,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     patient.cpp \
+    speicher.cpp \
     verwaltung.cpp
 
 HEADERS += \
     mainwindow.h \
     patient.h \
+    speicher.h \
     verwaltung.h
 
 FORMS += \
