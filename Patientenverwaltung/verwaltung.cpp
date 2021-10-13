@@ -14,8 +14,8 @@ Verwaltung::Verwaltung(QWidget *parent) :
     geschlecht.append("m");
     geschlecht.append("d");
     ui->geschlecht_comboBox->addItems(geschlecht);
-    connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (change(QDate)));
-    connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (datechange()));
+    connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (datechange(QDate)));
+    connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->nachname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->vorname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->ort_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
