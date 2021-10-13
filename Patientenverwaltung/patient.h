@@ -15,7 +15,7 @@ public:
                 int hnr,
                 int plz,
                 int patient_id,
-                char geschlecht);
+                QString geschlecht);
 
         //get-funktionen
         QString get_titel(){return titel;}
@@ -27,7 +27,7 @@ public:
         int get_hnr() {return hnr;}
         int get_plz(){return plz;}
         int get_patient_id(){return patient_id;}
-        char get_geschlecht(){return geschlecht;}
+        QString get_geschlecht(){return geschlecht;}
 
         //set-funktionen
         void set_titel(QString title){titel = title;}
@@ -39,7 +39,7 @@ public:
         void set_hnr(int hausnummer){hnr = hausnummer;}
         void set_plz(int postleitzahl){plz = postleitzahl;}
         void set_patient_id(int pat_id){patient_id = pat_id;}
-        void set_geschlecht(char geschl){geschlecht = geschl;}
+        void set_geschlecht(QString geschl){geschlecht = geschl;}
 
     private:
         //variablen
@@ -52,7 +52,7 @@ public:
         int hnr;
         int plz;
         int patient_id;
-        char geschlecht;
+        QString geschlecht;
     };
 
 

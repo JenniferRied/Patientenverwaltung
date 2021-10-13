@@ -24,12 +24,14 @@ public:
     int housenumber;
     int id;
     int region_code;
-    char sex;
+    QString sex;
 
 
 public slots:
     void save();
     void change();
+    void textchange(QString);
+
 private:
     Ui::Verwaltung *ui;
 };

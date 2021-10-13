@@ -8,7 +8,12 @@ Verwaltung::Verwaltung(QWidget *parent) :
     ui(new Ui::Verwaltung)
 {
     ui->setupUi(this);
-
+    QList<QString> geschlecht;
+    geschlecht.append(" ");
+    geschlecht.append("w");
+    geschlecht.append("m");
+    geschlecht.append("d");
+    ui->geschlecht_comboBox->addItems(geschlecht);
     connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->nachname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->vorname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
@@ -17,13 +22,17 @@ Verwaltung::Verwaltung(QWidget *parent) :
     connect(ui->hnr_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->plz_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->tel_nr_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-
-    //sex = ui->geschlecht_comboBox;
+    connect(ui->geschlecht_comboBox, SIGNAL (currentTextChanged(QString)), this, SLOT (textchange(QString)));
     connect(ui->buttonBox,SIGNAL (accepted()),this, SLOT (save()));
 }
 void Verwaltung::save()
 {
     //Patient::set_titel(title);
+}
+
+void Verwaltung::textchange(QString)
+{
+    change();
 }
 
 void Verwaltung::change()
@@ -36,8 +45,22 @@ void Verwaltung::change()
     housenumber = ui->hnr_textEdit->toPlainText().toInt();
     region_code = ui->plz_textEdit->toPlainText().toInt();
     phone = ui->tel_nr_textEdit->toPlainText();
+    sex = ui->geschlecht_comboBox->currentText();
     QString hnr = " ";
     QString regc = " ";
+    QString geschl = " ";
+    if (sex == "w")
+    {
+        geschl = "weiblich";
+    }
+    if (sex == "m")
+    {
+        geschl = "männlich";
+    }
+    if (sex == "d")
+    {
+        geschl = "divers";
+    }
     if (housenumber != 0)
     {
         hnr = QString::number(housenumber);
@@ -46,7 +69,7 @@ void Verwaltung::change()
     {
         regc = QString::number(region_code);
     }
-    ui->eingaben->setText(title +" "+ firstname +" "+ lastname +"\n"+ street +" "+ hnr +"\n"+ regc +" "+ place +"\n"+ phone);
+    ui->eingaben->setText(title +" "+ firstname +" "+ lastname +"\n"+ geschl +"\n"+ street +" "+ hnr +"\n"+ regc +" "+ place +"\n"+ phone);
 }
 
 

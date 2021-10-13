@@ -258,6 +258,9 @@
      <height>25</height>
     </rect>
    </property>
+   <property name="currentText">
+    <string/>
+   </property>
   </widget>
   <widget class="QLabel" name="eingaben">
    <property name="geometry">

@@ -10,7 +10,7 @@ Patient::Patient(QString titel,
                  int hnr,
                  int plz,
                  int patient_id,
-                 char geschlecht)
+                 QString geschlecht)
 {
-
+    QList<Patient> patienten;
 }
