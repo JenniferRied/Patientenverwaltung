@@ -11,13 +11,11 @@ public:
                 QString vorname,
                 QString strasse,
                 QString ort,
-                QString tel,
                 int hnr,
                 int plz,
                 int patient_id,
+                QString tel,
                 QString geschlecht);
-
-        void save_patient();
 
         //get-funktionen
         QString get_titel(){return titel;}
@@ -50,10 +48,10 @@ public:
         QString vorname;
         QString strasse;
         QString ort;
-        QString tel;
         int hnr;
         int plz;
         int patient_id;
+        QString tel;
         QString geschlecht;
     };
 

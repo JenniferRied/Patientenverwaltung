@@ -8,9 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->pushButton->clicked();
+
     connect(ui->pushButton, SIGNAL (clicked()),this, SLOT (buttonclick()));
 
-       //if(ui->pushButton->clicked())
+    Speicher::getInstance().set_beobachter(this);
 }
 void MainWindow::buttonclick()
 {
@@ -22,3 +23,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::patient_updated()
+{
+    //tabelle neu laden, da in liste der Patienten eine Änderung passiert ist
+    //sinnvollsten nur funktionsaufruf der Tabellenerstellung
+}

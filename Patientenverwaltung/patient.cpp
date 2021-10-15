@@ -4,28 +4,12 @@
 #include <QMessageBox>
 #include <QString>
 
-Patient::Patient(QString titel,
-                 QString nachname,
-                 QString vorname,
-                 QString strasse,
-                 QString ort,
-                 QString tel,
-                 int hnr,
-                 int plz,
-                 int patient_id,
-                 QString geschlecht)
+Patient::Patient(QString titel, QString nachname, QString vorname,
+                 QString strasse, QString ort, int hnr, int plz,
+                 int patient_id, QString tel, QString geschlecht)
+    :titel(titel),nachname(nachname),vorname(vorname),
+    strasse(strasse),ort(ort),hnr(hnr),plz(plz),
+    patient_id(patient_id), tel(tel), geschlecht(geschlecht)
 {
-    QList<Patient> patienten;
-}
 
-void Patient::save_patient()
-{
-       Speicher* speicher = Speicher::getInstance();
-       speicher->set_patientenliste(*this);
-
-       //zum Debbugen
-       QMessageBox msgBox;
-       QString string = QString::number(speicher->number_Patient());
-       msgBox.setText(string);
-       msgBox.exec();
 }

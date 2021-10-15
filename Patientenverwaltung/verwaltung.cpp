@@ -1,6 +1,7 @@
 #include "verwaltung.h"
 #include "ui_verwaltung.h"
 #include "patient.h"
+#include "speicher.h"
 #include <list>
 
 Verwaltung::Verwaltung(QWidget *parent) :
@@ -28,9 +29,23 @@ Verwaltung::Verwaltung(QWidget *parent) :
 }
 void Verwaltung::save()
 {
-    Patient patient(ui->titel_textEdit->toPlainText(),ui->nachname_textEdit->toPlainText(), ui->vorname_textEdit->toPlainText(), ui->strasse_textEdit->toPlainText(),
-                    ui->ort_textEdit->toPlainText(),ui->tel_nr_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),1,'w');
-    patient.save_patient();
+    patient = new Patient(ui->titel_textEdit->toPlainText(),ui->nachname_textEdit->toPlainText(), ui->vorname_textEdit->toPlainText(), ui->strasse_textEdit->toPlainText(),
+                          ui->ort_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),1,ui->tel_nr_textEdit->toPlainText(),"weiblich");
+    Speicher& data = Speicher::getInstance();
+
+    int hoechste_Id = 0;
+
+    if (data.get_alle_patienten().count() >=1)
+    {
+        for (Patient* patient : data.get_alle_patienten()) {
+            if (patient->get_patient_id() > hoechste_Id) {
+                hoechste_Id = patient->get_patient_id();
+            }
+        }
+    }
+    patient->set_patient_id(hoechste_Id + 1);
+
+    data.update_patient(patient);
 }
 
 void Verwaltung::datechanged(QDate)

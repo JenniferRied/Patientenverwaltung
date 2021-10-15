@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QDate>
+#include "patient.h"
 
 namespace Ui {
 class Verwaltung;
@@ -37,6 +38,7 @@ public slots:
 
 private:
     Ui::Verwaltung *ui;
+    Patient* patient;
 };
 
 #endif // VERWALTUNG_H
