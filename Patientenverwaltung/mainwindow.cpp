@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton, SIGNAL (clicked()),this, SLOT (buttonclick()));
 
-    Speicher::getInstance().set_beobachter(this);
+    Speicher::getInstance().beobachter_anhaengen(this);
 }
 void MainWindow::buttonclick()
 {
