@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->aendern_button, SIGNAL (clicked()),this, SLOT (aendern_buttonclick()));
     connect(ui->loeschen_button, SIGNAL (clicked()),this, SLOT (loeschen_buttonclick()));
     connect(ui->suchen_button, SIGNAL (clicked()),this, SLOT (suchen_buttonclick()));
+    connect(ui->export_button, SIGNAL (clicked()),this, SLOT (export_buttonclick()));
 
     //Icons
 
@@ -29,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent)
     QIcon suche;
     //https://www.clipartmax.com/download/m2K9A0b1m2d3G6K9_clipart-magnifying-glass-black-clipart/
     suche.addFile("/home/dbuser/Dokumente/Patientenverwaltung/Patientenverwaltung/clipart28741.png");
+    QIcon export_icon;
+    //https://www.clipartmax.com/download/m2i8H7m2G6d3A0N4_email-free-clip-art-envelope-clipart-transparent-background/
+    export_icon.addFile("/home/dbuser/Dokumente/Patientenverwaltung/Patientenverwaltung/clipart611030.png");
     QSize iconSize;
     iconSize.setWidth(60);
     iconSize.setHeight(60);
@@ -39,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->aendern_button->setIconSize(iconSize);
     ui->suchen_button->setIcon(suche);
     ui->suchen_button->setIconSize(iconSize);
+    ui->export_button->setIcon(export_icon);
+    ui->export_button->setIconSize(iconSize);
 
 
     Speicher::getInstance().beobachter_anhaengen(this);
@@ -108,6 +114,11 @@ void MainWindow::loeschen_buttonclick()
 }
 
 void MainWindow::suchen_buttonclick()
+{
+
+}
+
+void MainWindow::export_buttonclick()
 {
 
 }

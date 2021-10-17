@@ -22,6 +22,7 @@ public slots:
     void aendern_buttonclick();
     void loeschen_buttonclick();
     void suchen_buttonclick();
+    void export_buttonclick();
 
 private:
     Ui::MainWindow *ui;
