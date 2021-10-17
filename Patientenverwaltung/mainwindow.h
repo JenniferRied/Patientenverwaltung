@@ -18,7 +18,10 @@ public:
 
     virtual void patient_updated() override;
 public slots:
-    void buttonclick();
+    void hinzufuegen_buttonclick();
+    void aendern_buttonclick();
+    void loeschen_buttonclick();
+    void suchen_buttonclick();
 
 private:
     Ui::MainWindow *ui;
