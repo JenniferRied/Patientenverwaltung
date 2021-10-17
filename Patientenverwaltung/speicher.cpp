@@ -1,4 +1,8 @@
 #include "speicher.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 Speicher& Speicher::getInstance()
 {
@@ -8,14 +12,16 @@ Speicher& Speicher::getInstance()
 
 void Speicher::beobachter_anhaengen(Beobachter *beobachter)
 {
-    if (!beobachter_patient_update.contains(beobachter)) {
+    if (!beobachter_patient_update.contains(beobachter))
+    {
         beobachter_patient_update.append(beobachter);
     }
 }
 
 void Speicher::beobachter_abmachen(Beobachter *beobachter)
 {
-    if (beobachter_patient_update.contains(beobachter)) {
+    if (beobachter_patient_update.contains(beobachter))
+    {
         beobachter_patient_update.removeOne(beobachter);
     }
 }
@@ -32,7 +38,8 @@ QList<Patient *> Speicher::get_alle_patienten()
 
 void Speicher::update_patient(Patient *patient)
 {
-    if (patienten.contains(patient->get_patient_id()) && patient != patienten[patient->get_patient_id()]) {
+    if (patienten.contains(patient->get_patient_id()) && patient != patienten[patient->get_patient_id()])
+    {
         delete patienten[patient->get_patient_id()];
     }
 
@@ -45,7 +52,8 @@ void Speicher::update_patient(Patient *patient)
 
 void Speicher::loesche_patient(int id)
 {
-    if (patienten.contains(id)) {
+    if (patienten.contains(id))
+    {
         delete patienten[id];
         patienten.remove(id);
     }
@@ -55,12 +63,13 @@ void Speicher::loesche_patient(int id)
 
 Speicher::Speicher()
 {
-    daten_speichern();
+    daten_laden();
 }
 
 Speicher::~Speicher()
 {
-    foreach (Patient* pat, patienten) {
+    foreach (Patient* pat, patienten)
+    {
         delete pat;
     }
     patienten.clear();
@@ -68,7 +77,28 @@ Speicher::~Speicher()
 
 void Speicher::daten_laden()
 {
+    QFile patienten_datei("Patienten.json");
 
+    if (!patienten_datei.open(QIODevice::ReadOnly))
+    {
+        return;
+    }
+
+    QJsonObject json = QJsonDocument::fromJson(patienten_datei.readAll()).object();
+
+    if (json.contains("patienten"))
+    {
+        QJsonArray jsonPatients = json["patienten"].toArray();
+
+        for (int patienten_index = 0; patienten_index < jsonPatients.size(); patienten_index++)
+        {
+            Patient* patient = Patient::read(jsonPatients[patienten_index].toObject());
+            if (!patienten.contains(patient->get_patient_id()))
+            {
+                patienten[patient->get_patient_id()] = patient;
+            }
+        }
+    }
 }
 
 void Speicher::daten_speichern()
@@ -78,7 +108,8 @@ void Speicher::daten_speichern()
 
 void Speicher::patientenaenderung_melden()
 {
-    for (Beobachter* beobachter : beobachter_patient_update) {
+    for (Beobachter* beobachter : beobachter_patient_update)
+    {
         beobachter->patient_updated();
     }
 }

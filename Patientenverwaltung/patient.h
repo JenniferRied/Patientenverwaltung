@@ -2,6 +2,7 @@
 #define PATIENT_H
 #include <QString>
 #include <QDate>
+#include <QJsonObject>
 
 class Patient
 {
@@ -18,6 +19,7 @@ public:
                 QDate geb,
                 QString tel,
                 QString geschlecht);
+        Patient(){};
 
         //get-funktionen
         QString get_titel(){return titel;}
@@ -45,6 +47,7 @@ public:
         void set_geburtstag(QDate geburtstag){geb = geburtstag;}
         void set_geschlecht(QString geschl){geschlecht = geschl;}
 
+        static Patient* read(const QJsonObject &json);
     private:
         //variablen
         QString titel;
