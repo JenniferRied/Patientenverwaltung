@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "verwaltung.h"
 
+#include<QTableWidget>
+#include<QTableWidgetItem>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,6 +42,58 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     Speicher::getInstance().beobachter_anhaengen(this);
+
+
+
+    //Patientenliste
+
+
+
+    int a = 0;
+    int x = 0;
+    int y = 0;
+
+    QString t_laeufer;
+    QStringList header;
+
+
+
+
+    ui->setupUi(this);
+    ui->tableWidget->setColumnCount(4); //Anzahl Spalten
+    ui->tableWidget->setRowCount(a);    //Anzahl Zeilen
+    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(110);  //Breite der Spalten
+
+    QTableWidgetItem *header1 = new QTableWidgetItem();
+    header1->setText("Titel");
+    ui->tableWidget->setHorizontalHeaderItem(0,header1);
+    QTableWidgetItem *header2 = new QTableWidgetItem();
+    header2->setText("Vorname");
+    ui->tableWidget->setHorizontalHeaderItem(1,header2);
+    QTableWidgetItem *header3 = new QTableWidgetItem();
+    header3->setText("Nachname");
+    ui->tableWidget->setHorizontalHeaderItem(2,header3);
+    QTableWidgetItem *header4 = new QTableWidgetItem();
+    header4->setText("Geburtsdatum");
+    ui->tableWidget->setHorizontalHeaderItem(3,header4);
+
+
+
+    //while input {   }
+
+    for (int i = 1; i <= 3; i++)
+    {
+
+
+        QTableWidgetItem *newItem = new QTableWidgetItem(t_laeufer);
+        ui->tableWidget->setItem(y,x,newItem);
+        y++;
+    }
+
+    //Datum ausgabe einfügen
+
+
+
 }
 
 void MainWindow::hinzufuegen_buttonclick()
