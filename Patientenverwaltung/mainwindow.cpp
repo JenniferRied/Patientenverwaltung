@@ -56,10 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
     QString t_laeufer;
     QStringList header;
 
-
-
-
-    ui->setupUi(this);
     ui->tableWidget->setColumnCount(4); //Anzahl Spalten
     ui->tableWidget->setRowCount(a);    //Anzahl Zeilen
     ui->tableWidget->horizontalHeader()->setDefaultSectionSize(110);  //Breite der Spalten
@@ -78,7 +74,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->setHorizontalHeaderItem(3,header4);
 
 
-
     //while input {   }
 
     for (int i = 1; i <= 3; i++)
@@ -91,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     //Datum ausgabe einfügen
-
 
 
 }
