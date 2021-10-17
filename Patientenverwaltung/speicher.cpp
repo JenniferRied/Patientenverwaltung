@@ -103,7 +103,24 @@ void Speicher::daten_laden()
 
 void Speicher::daten_speichern()
 {
+    QFile patienten_datei("Patienten.json");
 
+    if (!patienten_datei.open(QIODevice::WriteOnly))
+    {
+        return;
+    }
+
+    QJsonArray json_patienten;
+    for (Patient* patient : patienten.values())
+    {
+        QJsonObject json_patient;
+        patient->write(json_patient);
+        json_patienten.append(json_patient);
+    }
+
+    QJsonObject json;
+    json["patienten"] = json_patienten;
+    patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
 }
 
 void Speicher::patientenaenderung_melden()

@@ -75,3 +75,18 @@ Patient* Patient::read(const QJsonObject &json)
 
     return patient;
 }
+
+void Patient::write(QJsonObject &json) const
+{
+    json["titel"] = titel;
+    json["nachname"] = nachname;
+    json["vorname"] = vorname;
+    json["strasse"] = strasse;
+    json["ort"] = ort;
+    json["tel"] = tel;
+    json["hnr"] = hnr;
+    json["plz"] = plz;
+    json["id"] = patient_id;
+    json["geb"] = geb.toString("dd.MM.yyyy");
+    json["geschlecht"] = geschlecht;
+}

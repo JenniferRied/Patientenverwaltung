@@ -48,6 +48,8 @@ public:
         void set_geschlecht(QString geschl){geschlecht = geschl;}
 
         static Patient* read(const QJsonObject &json);
+        void write(QJsonObject &json) const;
+
     private:
         //variablen
         QString titel;
