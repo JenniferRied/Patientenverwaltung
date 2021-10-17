@@ -48,7 +48,7 @@ void Verwaltung::save()
     data.update_patient(patient);
 }
 
-void Verwaltung::datechanged(QDate)
+void Verwaltung::datechange(QDate)
 {
     change();
 }

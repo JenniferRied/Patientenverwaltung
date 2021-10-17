@@ -34,7 +34,7 @@ public slots:
     void save();
     void change();
     void textchange(QString);
-    void datechanged(QDate);
+    void datechange(QDate);
 
 private:
     Ui::Verwaltung *ui;
