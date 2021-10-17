@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Bilder">
+        <file>clipart28741.png</file>
+        <file>clipart209647.png</file>
+        <file>clipart611030.png</file>
+        <file>clipart1719902.png</file>
+        <file>clipart1976610.png</file>
+    </qresource>
+</RCC>
