@@ -1,6 +1,7 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 #include <QString>
+#include <QDate>
 
 class Patient
 {
@@ -14,6 +15,7 @@ public:
                 int hnr,
                 int plz,
                 int patient_id,
+                QDate geb,
                 QString tel,
                 QString geschlecht);
 
@@ -27,6 +29,7 @@ public:
         int get_hnr() {return hnr;}
         int get_plz(){return plz;}
         int get_patient_id(){return patient_id;}
+        QDate get_geburtstag(){return geb;}
         QString get_geschlecht(){return geschlecht;}
 
         //set-funktionen
@@ -39,6 +42,7 @@ public:
         void set_hnr(int hausnummer){hnr = hausnummer;}
         void set_plz(int postleitzahl){plz = postleitzahl;}
         void set_patient_id(int pat_id){patient_id = pat_id;}
+        void set_geburtstag(QDate geburtstag){geb = geburtstag;}
         void set_geschlecht(QString geschl){geschlecht = geschl;}
 
     private:
@@ -51,6 +55,7 @@ public:
         int hnr;
         int plz;
         int patient_id;
+        QDate geb;
         QString tel;
         QString geschlecht;
     };
