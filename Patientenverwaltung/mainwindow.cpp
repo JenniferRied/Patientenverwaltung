@@ -43,32 +43,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->export_button->setIcon(*export_icon);
     ui->export_button->setIconSize(iconSize);
 
-
     Speicher::getInstance().beobachter_anhaengen(this);
 
-
-
-    //Patientenliste
-
-
-
-    ui->tableWidget->setColumnCount(4); //Anzahl Spalten
-    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
-
-    QTableWidgetItem *header1 = new QTableWidgetItem();
-    header1->setText("Titel");
-    ui->tableWidget->setHorizontalHeaderItem(0,header1);
-    QTableWidgetItem *header2 = new QTableWidgetItem();
-    header2->setText("Vorname");
-    ui->tableWidget->setHorizontalHeaderItem(1,header2);
-    QTableWidgetItem *header3 = new QTableWidgetItem();
-    header3->setText("Nachname");
-    ui->tableWidget->setHorizontalHeaderItem(2,header3);
-    QTableWidgetItem *header4 = new QTableWidgetItem();
-    header4->setText("Geburtsdatum");
-    ui->tableWidget->setHorizontalHeaderItem(3,header4);
-
-
+    tabelle_erzeugen();
 }
 
 void MainWindow::hinzufuegen_buttonclick()
@@ -105,34 +82,34 @@ MainWindow::~MainWindow()
 
 void MainWindow::patient_updated()
 {
-    //tabelle neu laden, da in liste der Patienten eine Änderung passiert ist
-    //sinnvollsten nur funktionsaufruf der Tabellenerstellung
+    tabelle_erzeugen();
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::tabelle_erzeugen()
 {
-    int row_count = 0;
-
-    ui->tableWidget->setRowCount(row_count);
-
     QList<Patient*> patienten = Speicher::getInstance().get_alle_patienten();
 
+    ui->tableWidget->setRowCount(patienten.size());
+    ui->tableWidget->setColumnCount(4); //Anzahl Spalten
+    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
 
-    for (int patienten_nr = 0; patienten_nr < patienten.size(); patienten_nr++){
+    ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Titel"));
+    ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Vorname"));
+    ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Nachname"));
+    ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("Geburtsdatum"));
 
-    row_count++;
-    ui->tableWidget->setRowCount(row_count);
-    Patient* patient = patienten[patienten_nr];
+    for (int patienten_nr = 0; patienten_nr < patienten.size(); patienten_nr++)
+    {
 
-    QTableWidgetItem *new_titel = new QTableWidgetItem(patient->get_titel());
-    ui->tableWidget->setItem(patienten_nr,0,new_titel);
-    QTableWidgetItem *new_vorname = new QTableWidgetItem(patient->get_vorname());
-    ui->tableWidget->setItem(patienten_nr,1,new_vorname);
-    QTableWidgetItem *new_nachname = new QTableWidgetItem(patient->get_nachname());
-    ui->tableWidget->setItem(patienten_nr,2,new_nachname);
+        Patient* patient = patienten[patienten_nr];
 
-    //Datumausgabe hinzufügen
-    //QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag());
-    //ui->tableWidget->setItem(patienten_nr,3,new_geb);
+        QTableWidgetItem *new_titel = new QTableWidgetItem(patient->get_titel());
+        ui->tableWidget->setItem(patienten_nr,0,new_titel);
+        QTableWidgetItem *new_vorname = new QTableWidgetItem(patient->get_vorname());
+        ui->tableWidget->setItem(patienten_nr,1,new_vorname);
+        QTableWidgetItem *new_nachname = new QTableWidgetItem(patient->get_nachname());
+        ui->tableWidget->setItem(patienten_nr,2,new_nachname);
+        QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag().toString("dd.MM.yyyy"));
+        ui->tableWidget->setItem(patienten_nr,3,new_geb);
     }
 }

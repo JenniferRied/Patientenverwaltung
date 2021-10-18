@@ -102,19 +102,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>490</y>
-      <width>181</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tabelle aktualisieren</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
