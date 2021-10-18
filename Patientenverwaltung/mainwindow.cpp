@@ -52,16 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-    int a = 0;
-    int x = 0;
-    int y = 0;
-
-    QString t_laeufer;
-    QStringList header;
-
     ui->tableWidget->setColumnCount(4); //Anzahl Spalten
-    ui->tableWidget->setRowCount(a);    //Anzahl Zeilen
-    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(110);  //Breite der Spalten
+    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
 
     QTableWidgetItem *header1 = new QTableWidgetItem();
     header1->setText("Titel");
@@ -75,20 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     QTableWidgetItem *header4 = new QTableWidgetItem();
     header4->setText("Geburtsdatum");
     ui->tableWidget->setHorizontalHeaderItem(3,header4);
-
-
-    //while input {   }
-
-    for (int i = 1; i <= 3; i++)
-    {
-
-
-        QTableWidgetItem *newItem = new QTableWidgetItem(t_laeufer);
-        ui->tableWidget->setItem(y,x,newItem);
-        y++;
-    }
-
-    //Datum ausgabe einfügen
 
 
 }
@@ -129,4 +107,32 @@ void MainWindow::patient_updated()
 {
     //tabelle neu laden, da in liste der Patienten eine Änderung passiert ist
     //sinnvollsten nur funktionsaufruf der Tabellenerstellung
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    int row_count = 0;
+
+    ui->tableWidget->setRowCount(row_count);
+
+    QList<Patient*> patienten = Speicher::getInstance().get_alle_patienten();
+
+
+    for (int patienten_nr = 0; patienten_nr < patienten.size(); patienten_nr++){
+
+    row_count++;
+    ui->tableWidget->setRowCount(row_count);
+    Patient* patient = patienten[patienten_nr];
+
+    QTableWidgetItem *new_titel = new QTableWidgetItem(patient->get_titel());
+    ui->tableWidget->setItem(patienten_nr,0,new_titel);
+    QTableWidgetItem *new_vorname = new QTableWidgetItem(patient->get_vorname());
+    ui->tableWidget->setItem(patienten_nr,1,new_vorname);
+    QTableWidgetItem *new_nachname = new QTableWidgetItem(patient->get_nachname());
+    ui->tableWidget->setItem(patienten_nr,2,new_nachname);
+
+    //Datumausgabe hinzufügen
+    //QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag());
+    //ui->tableWidget->setItem(patienten_nr,3,new_geb);
+    }
 }

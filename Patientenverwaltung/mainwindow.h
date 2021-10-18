@@ -24,6 +24,9 @@ public slots:
     void suchen_buttonclick();
     void export_buttonclick();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
