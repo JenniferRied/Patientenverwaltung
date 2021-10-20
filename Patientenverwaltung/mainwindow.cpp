@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->loeschen_button, SIGNAL (clicked()),this, SLOT (loeschen_buttonclick()));
     connect(ui->suchen_button, SIGNAL (clicked()),this, SLOT (suchen_buttonclick()));
     connect(ui->export_button, SIGNAL (clicked()),this, SLOT (export_buttonclick()));
+    connect(ui->export_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
 
     //Icons
 
@@ -74,6 +75,11 @@ void MainWindow::suchen_buttonclick()
 }
 
 void MainWindow::export_buttonclick()
+{
+
+}
+
+void MainWindow::anzeigen_buttonclick()
 {
 
 }
