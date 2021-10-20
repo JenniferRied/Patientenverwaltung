@@ -25,6 +25,8 @@ public:
     void update_patient(Patient* patient);
     void loesche_patient(int id);
 
+    QJsonObject json_erstellen(QList<Patient*> patienten);
+    
 private:
     Speicher();
     virtual ~Speicher();

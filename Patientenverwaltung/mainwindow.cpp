@@ -76,7 +76,33 @@ void MainWindow::suchen_buttonclick()
 
 void MainWindow::export_buttonclick()
 {
+    QList<Patient*> patienten;
+    int zeilen = ui->tableWidget->rowCount();
 
+    for (int i = 0; i < zeilen; i++)
+    {
+        QWidget *item = ui->tableWidget->cellWidget(i,0);
+        QCheckBox* checkB = qobject_cast <QCheckBox *> (item->layout()->itemAt(0)->widget());
+
+        if(checkB->isChecked())
+        {
+            int id = ui->tableWidget->verticalHeaderItem(i)->text().toInt();
+            Patient* patient= Speicher::getInstance().get_patient(id);
+            patienten.append(patient);
+        }
+    }
+
+    QFile patienten_datei("Export.json");
+
+    if (!patienten_datei.open(QIODevice::WriteOnly))
+    {
+        //Json-Datei nicht erfolgreich geöffnet
+        return;
+    }
+
+    QJsonObject json = Speicher::getInstance().json_erstellen(patienten);
+    patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
+    // erfolgreich in datei gespeichert
 }
 
 void MainWindow::anzeigen_buttonclick()
