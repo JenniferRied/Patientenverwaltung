@@ -24,6 +24,7 @@ public slots:
     void suchen_buttonclick();
     void export_buttonclick();
     void anzeigen_buttonclick();
+    void anzeige_schliessen_buttonclick();
 
 private:
     Ui::MainWindow *ui;

@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->suchen_button, SIGNAL (clicked()),this, SLOT (suchen_buttonclick()));
     connect(ui->export_button, SIGNAL (clicked()),this, SLOT (export_buttonclick()));
     connect(ui->anzeigen_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
+    connect(ui->schliessen_button,SIGNAL (clicked()),this, SLOT(anzeige_schliessen_buttonclick()));
 
     //Icons
 
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->export_button->setIcon(*export_icon);
     ui->export_button->setIconSize(iconSize);
 
+    ui->widget->setVisible(false);
     Speicher::getInstance().beobachter_anhaengen(this);
 
     tabelle_erzeugen();
@@ -65,14 +67,7 @@ void MainWindow::aendern_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
 
-    if (patienten_id == 0)
-    {
-        //Fehlermeldung, dass keine ID ausgewählt wurde
-    }
-    else if (patienten_id == -1) {
-        //Fehlermeldung mehr als eins ausgewählt
-    }
-    else
+    if (patienten_id > 0)
     {
         Verwaltung *verw = new Verwaltung(patienten_id);
         verw->show();
@@ -84,14 +79,7 @@ void MainWindow::loeschen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
 
-    if (patienten_id == 0)
-    {
-        //Fehlermeldung, dass keine ID ausgewählt wurde
-    }
-    else if (patienten_id == -1) {
-        //Fehlermeldung mehr als eins ausgewählt
-    }
-    else
+    if (patienten_id > 0)
     {
         // Dialog, dass man sicher ist, dass es gelöscht werden soll
         Speicher::getInstance().loesche_patient(patienten_id);
@@ -136,7 +124,25 @@ void MainWindow::export_buttonclick()
 
 void MainWindow::anzeigen_buttonclick()
 {
+    int patienten_id = ausgewaehlte_id();
 
+    if (patienten_id > 0)
+    {
+        ui->widget->setVisible(true);
+        Patient* patient= Speicher::getInstance().get_patient(patienten_id);
+        ui->anzeige_label->setText(patient->get_titel() + "\n" + patient->get_vorname() + " " + patient->get_nachname() + "\n"
+                                   + patient->get_strasse() + " " + QString::number(patient->get_hnr()) + "\n"
+                                   + QString::number(patient->get_plz()) + " " + patient->get_ort() + "\n"
+                                   + patient->get_geschlecht() + "\n"
+                                   + patient->get_geburtstag().toString("dd.MM.yyyy") + "\n"
+                                   + patient->get_tel());
+    }
+}
+
+void MainWindow::anzeige_schliessen_buttonclick()
+{
+    ui->widget->setVisible(false);
+    ui->anzeige_label->setText("");
 }
 
 MainWindow::~MainWindow()
@@ -175,7 +181,6 @@ void MainWindow::tabelle_erzeugen()
         QHBoxLayout *layoutCheckBox = new QHBoxLayout(checkBoxWidget);
         layoutCheckBox->addWidget(checkBox);
         layoutCheckBox->setAlignment(Qt::AlignCenter);
-        layoutCheckBox->setContentsMargins(0,0,0,0);
 
         checkBox->setChecked(false);
 
@@ -212,9 +217,17 @@ int MainWindow::ausgewaehlte_id()
                   eins_ausgewaehlt = true;
                   patienten_id = ui->tableWidget->verticalHeaderItem(i)->text().toInt();
             }else{
+                //Fehlermeldung mehr als ein Patient ausgewählt
                 return -1;
             }
         }
     }
+
+    if (patienten_id == 0)
+    {
+        //Fehlermeldung, dass kein Patient ausgewählt wurde
+        patienten_id = -1;
+    }
+
     return patienten_id;
 }
