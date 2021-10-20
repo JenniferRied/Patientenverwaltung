@@ -6,6 +6,9 @@
 #include <QHBoxLayout>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->loeschen_button, SIGNAL (clicked()),this, SLOT (loeschen_buttonclick()));
     connect(ui->suchen_button, SIGNAL (clicked()),this, SLOT (suchen_buttonclick()));
     connect(ui->export_button, SIGNAL (clicked()),this, SLOT (export_buttonclick()));
-    connect(ui->export_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
+    connect(ui->anzeigen_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
 
     //Icons
 
@@ -54,19 +57,45 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::hinzufuegen_buttonclick()
 {
-    Verwaltung *verw = new Verwaltung();
+    Verwaltung *verw = new Verwaltung(0);
     verw->show();
 }
 
 void MainWindow::aendern_buttonclick()
 {
-    Verwaltung *verw = new Verwaltung();
-    verw->show();
+    int patienten_id = ausgewaehlte_id();
+
+    if (patienten_id == 0)
+    {
+        //Fehlermeldung, dass keine ID ausgewählt wurde
+    }
+    else if (patienten_id == -1) {
+        //Fehlermeldung mehr als eins ausgewählt
+    }
+    else
+    {
+        Verwaltung *verw = new Verwaltung(patienten_id);
+        verw->show();
+    }
+
 }
 
 void MainWindow::loeschen_buttonclick()
 {
+    int patienten_id = ausgewaehlte_id();
 
+    if (patienten_id == 0)
+    {
+        //Fehlermeldung, dass keine ID ausgewählt wurde
+    }
+    else if (patienten_id == -1) {
+        //Fehlermeldung mehr als eins ausgewählt
+    }
+    else
+    {
+        // Dialog, dass man sicher ist, dass es gelöscht werden soll
+        Speicher::getInstance().loesche_patient(patienten_id);
+    }
 }
 
 void MainWindow::suchen_buttonclick()
@@ -163,4 +192,29 @@ void MainWindow::tabelle_erzeugen()
         QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag().toString("dd.MM.yyyy"));
         ui->tableWidget->setItem(patienten_nr,4,new_geb);
     }
+}
+
+int MainWindow::ausgewaehlte_id()
+{
+    int zeilen = ui->tableWidget->rowCount();
+    int patienten_id = 0;
+    bool eins_ausgewaehlt = false;
+
+    for (int i = 0; i < zeilen; i++)
+    {
+        QWidget *item = ui->tableWidget->cellWidget(i,0);
+        QCheckBox* checkB = qobject_cast <QCheckBox *> (item->layout()->itemAt(0)->widget());
+
+        if(checkB->isChecked())
+        {
+            if(eins_ausgewaehlt == false)
+            {
+                  eins_ausgewaehlt = true;
+                  patienten_id = ui->tableWidget->verticalHeaderItem(i)->text().toInt();
+            }else{
+                return -1;
+            }
+        }
+    }
+    return patienten_id;
 }

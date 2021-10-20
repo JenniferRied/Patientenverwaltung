@@ -28,5 +28,6 @@ public slots:
 private:
     Ui::MainWindow *ui;
     void tabelle_erzeugen();
+    int ausgewaehlte_id();
 };
 #endif // MAINWINDOW_H
