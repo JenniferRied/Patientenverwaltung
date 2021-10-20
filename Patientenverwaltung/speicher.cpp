@@ -81,6 +81,7 @@ void Speicher::daten_laden()
 
     if (!patienten_datei.open(QIODevice::ReadOnly))
     {
+        //Fehlermeldung, Datei nicht fehlerfrei öffnenbar
         return;
     }
 
@@ -123,6 +124,7 @@ void Speicher::daten_speichern()
 
     if (!patienten_datei.open(QIODevice::WriteOnly))
     {
+        //Fehlermeldung, Datei nicht fehlerfrei öffnenbar
         return;
     }
 

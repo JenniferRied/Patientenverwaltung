@@ -36,21 +36,44 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
 }
 void Verwaltung::save()
 {
+    QString geschl;
+    if (ui->geschlecht_comboBox->currentText() == "w")
+    {
+        geschl = "weiblich";
+    }
+    if (ui->geschlecht_comboBox->currentText() == "m")
+    {
+        geschl = "männlich";
+    }
+    if (ui->geschlecht_comboBox->currentText() == "d")
+    {
+        geschl = "divers";
+    }
+
     Patient* patient = new Patient(ui->titel_textEdit->toPlainText(),ui->nachname_textEdit->toPlainText(), ui->vorname_textEdit->toPlainText(), ui->strasse_textEdit->toPlainText(),
-                          ui->ort_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),0,ui->geb_dateEdit->date(),ui->tel_nr_textEdit->toPlainText(),"weiblich");
+                                   ui->ort_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),0,ui->geb_dateEdit->date(),
+                                   ui->tel_nr_textEdit->toPlainText(),geschl);
+
     Speicher& data = Speicher::getInstance();
 
-    int hoechste_Id = 0;
-
-    if (data.get_alle_patienten().count() >=1)
+    if (id == 0)
     {
-        for (Patient* patient : data.get_alle_patienten()) {
-            if (patient->get_patient_id() > hoechste_Id) {
-                hoechste_Id = patient->get_patient_id();
+        int hoechste_Id = 0;
+
+        if (data.get_alle_patienten().count() >=1)
+        {
+            for (Patient* patient : data.get_alle_patienten()) {
+                if (patient->get_patient_id() > hoechste_Id) {
+                    hoechste_Id = patient->get_patient_id();
+                }
             }
         }
+        patient->set_patient_id(hoechste_Id + 1);
     }
-    patient->set_patient_id(hoechste_Id + 1);
+    else
+    {
+        patient->set_patient_id(id);
+    }
 
     data.update_patient(patient);
 }
@@ -80,7 +103,7 @@ void Verwaltung::patienten_editieren(int patienten_id)
     else if (geschlecht == "divers") {
         ui->geschlecht_comboBox->setCurrentIndex(4);
     }
-    zum_editieren = true;
+    id = patienten_id;
 }
 
 void Verwaltung::datechange(QDate)
@@ -95,16 +118,16 @@ void Verwaltung::textchange(QString)
 
 void Verwaltung::change()
 {
-    title = ui->titel_textEdit->toPlainText();
-    lastname = ui->nachname_textEdit->toPlainText();
-    firstname = ui->vorname_textEdit->toPlainText();
-    place = ui->ort_textEdit->toPlainText();
-    street = ui->strasse_textEdit->toPlainText();
-    housenumber = ui->hnr_textEdit->toPlainText().toInt();
-    region_code = ui->plz_textEdit->toPlainText().toInt();
-    phone = ui->tel_nr_textEdit->toPlainText();
-    sex = ui->geschlecht_comboBox->currentText();
-    geb = ui->geb_dateEdit->date();
+    QString title = ui->titel_textEdit->toPlainText();
+    QString lastname = ui->nachname_textEdit->toPlainText();
+    QString firstname = ui->vorname_textEdit->toPlainText();
+    QString place = ui->ort_textEdit->toPlainText();
+    QString street = ui->strasse_textEdit->toPlainText();
+    int housenumber = ui->hnr_textEdit->toPlainText().toInt();
+    int region_code = ui->plz_textEdit->toPlainText().toInt();
+    QString phone = ui->tel_nr_textEdit->toPlainText();
+    QString sex = ui->geschlecht_comboBox->currentText();
+    QDate geb = ui->geb_dateEdit->date();
     QString hnr = " ";
     QString regc = " ";
     QString geschl = " ";

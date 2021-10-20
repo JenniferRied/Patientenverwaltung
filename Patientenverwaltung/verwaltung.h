@@ -17,18 +17,6 @@ class Verwaltung : public QDialog
 public:
     explicit Verwaltung(int patienten_id, QWidget *parent = nullptr);
     ~Verwaltung();
-    QString title;
-    QString lastname;
-    QString firstname;
-    QString place;
-    QString street;
-    QString phone;
-    QDate geb;
-    int housenumber;
-    int id;
-    int region_code;
-    QString sex;
-
 
 public slots:
     void save();
@@ -39,7 +27,7 @@ public slots:
 private:
     Ui::Verwaltung *ui;
     void patienten_editieren(int);
-    bool zum_editieren = false;
+    int id = 0;
 };
 
 #endif // VERWALTUNG_H
