@@ -78,11 +78,21 @@ void MainWindow::aendern_buttonclick()
 void MainWindow::loeschen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
-
     if (patienten_id > 0)
     {
-        // Dialog, dass man sicher ist, dass es gelöscht werden soll
-        Speicher::getInstance().loesche_patient(patienten_id);
+        QMessageBox del_msgBox;
+        del_msgBox.setWindowTitle("Kontrollnachfrage");
+        del_msgBox.setText("Wollen sie den Patienten wirklich löschen?");
+        del_msgBox.setStandardButtons(QMessageBox::Yes);
+        del_msgBox.addButton(QMessageBox::No);
+        del_msgBox.setDefaultButton(QMessageBox::No);
+        if(del_msgBox.exec() == QMessageBox::Yes){
+            Speicher::getInstance().loesche_patient(patienten_id);
+        }else {
+          return;
+        }
+
+
     }
 }
 
