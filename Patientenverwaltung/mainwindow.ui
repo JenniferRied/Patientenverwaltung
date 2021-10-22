@@ -26,12 +26,11 @@
     <property name="focusPolicy">
      <enum>Qt::WheelFocus</enum>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>png-clipart-plus-and-minus-signs-addition-mathematics-plus-rectangle-plus-thumbnail.png</normaloff>png-clipart-plus-and-minus-signs-addition-mathematics-plus-rectangle-plus-thumbnail.png</iconset>
     </property>
     <property name="iconSize">
      <size>
