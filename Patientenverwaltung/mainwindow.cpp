@@ -151,7 +151,7 @@ void MainWindow::anzeigen_buttonclick()
                                    + patient->get_strasse() + " " + QString::number(patient->get_hnr()) + "\n"
                                    + QString::number(patient->get_plz()) + " " + patient->get_ort() + "\n"
                                    + patient->get_geschlecht() + "\n"
-                                   + patient->get_geburtstag().toString("dd.MM.yyyy") + "\n"
+                                   + patient->get_geburtstag().toString("yyyy.MM.dd") + "\n"
                                    + patient->get_tel());
     }
 }

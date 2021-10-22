@@ -65,7 +65,7 @@ Patient* Patient::read(const QJsonObject &json)
 
     if (json.contains("geb") && json["geb"].isString())
     {
-        QDate datum = QDate::fromString(json["geb"].toString(), "dd.MM.yyyy");
+        QDate datum = QDate::fromString(json["geb"].toString(), "yyyy.MM.dd");
         patient->set_geburtstag(datum);
     }
 
@@ -87,6 +87,6 @@ void Patient::write(QJsonObject &json) const
     json["hnr"] = hnr;
     json["plz"] = plz;
     json["id"] = patient_id;
-    json["geb"] = geb.toString("dd.MM.yyyy");
+    json["geb"] = geb.toString("yyyy.MM.dd");
     json["geschlecht"] = geschlecht;
 }

@@ -152,7 +152,7 @@ void Verwaltung::change()
         regc = QString::number(region_code);
     }
     //Alters-Berechnung
-    QString birthday = geb.toString("dd.MM.yyyy");
+    QString birthday = geb.toString("yyyy.MM.dd");
     int birth_year = geb.year();
     int current_year = QDate::currentDate().year();
     int alter = current_year - birth_year;
