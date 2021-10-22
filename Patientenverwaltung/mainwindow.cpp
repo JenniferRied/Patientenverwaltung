@@ -2,8 +2,6 @@
 #include "ui_mainwindow.h"
 #include "verwaltung.h"
 
-#include <QCheckBox>
-#include <QHBoxLayout>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QJsonDocument>
@@ -78,21 +76,20 @@ void MainWindow::aendern_buttonclick()
 void MainWindow::loeschen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
+
     if (patienten_id > 0)
     {
         QMessageBox del_msgBox;
         del_msgBox.setWindowTitle("Kontrollnachfrage");
-        del_msgBox.setText("Wollen sie den Patienten wirklich löschen?");
+        del_msgBox.setText("Wollen Sie den Patienten wirklich löschen?");
         del_msgBox.setStandardButtons(QMessageBox::Yes);
         del_msgBox.addButton(QMessageBox::No);
         del_msgBox.setDefaultButton(QMessageBox::No);
-        if(del_msgBox.exec() == QMessageBox::Yes){
+
+        if(del_msgBox.exec() == QMessageBox::Yes)
+        {
             Speicher::getInstance().loesche_patient(patienten_id);
-        }else {
-          return;
         }
-
-
     }
 }
 
@@ -104,32 +101,42 @@ void MainWindow::suchen_buttonclick()
 void MainWindow::export_buttonclick()
 {
     QList<Patient*> patienten;
-    int zeilen = ui->tableWidget->rowCount();
+    QList<QTableWidgetSelectionRange> ausgewaehlte_zeilen = ui->tableWidget->selectedRanges();
 
-    for (int i = 0; i < zeilen; i++)
+
+    for (int i = 0; i < ausgewaehlte_zeilen.size(); i++)
     {
-        QWidget *item = ui->tableWidget->cellWidget(i,0);
-        QCheckBox* checkB = qobject_cast <QCheckBox *> (item->layout()->itemAt(0)->widget());
-
-        if(checkB->isChecked())
-        {
-            int id = ui->tableWidget->verticalHeaderItem(i)->text().toInt();
-            Patient* patient= Speicher::getInstance().get_patient(id);
-            patienten.append(patient);
-        }
+        int zeile = ausgewaehlte_zeilen.at(i).topRow();
+        int id = ui->tableWidget->verticalHeaderItem(zeile)->text().toInt();
+        Patient* patient= Speicher::getInstance().get_patient(id);
+        patienten.append(patient);
     }
 
     QFile patienten_datei("Export.json");
 
-    if (!patienten_datei.open(QIODevice::WriteOnly))
+    if(patienten_datei.exists())
     {
-        //Json-Datei nicht erfolgreich geöffnet
-        return;
-    }
+        QMessageBox del_msgBox;
+        del_msgBox.setWindowTitle("Kontrollnachfrage");
+        del_msgBox.setText("Wollen Sie den alten Export überschreiben");
+        del_msgBox.setStandardButtons(QMessageBox::Yes);
+        del_msgBox.addButton(QMessageBox::No);
+        del_msgBox.setDefaultButton(QMessageBox::No);
 
-    QJsonObject json = Speicher::getInstance().json_erstellen(patienten);
-    patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
-    // erfolgreich in datei gespeichert
+        if(del_msgBox.exec() == QMessageBox::Yes)
+        {
+            if (!patienten_datei.open(QIODevice::WriteOnly))
+            {
+                //Json-Datei nicht erfolgreich geöffnet
+                return;
+            }
+
+            QJsonObject json = Speicher::getInstance().json_erstellen(patienten);
+            patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
+            ui->tableWidget->clearSelection();
+            // erfolgreich in datei gespeichert
+        }
+    }
 }
 
 void MainWindow::anzeigen_buttonclick()
@@ -170,14 +177,14 @@ void MainWindow::tabelle_erzeugen()
     QList<Patient*> patienten = Speicher::getInstance().get_alle_patienten();
 
     ui->tableWidget->setRowCount(patienten.size());
-    ui->tableWidget->setColumnCount(5); //Anzahl Spalten
-    ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
+    ui->tableWidget->setColumnCount(4); //Anzahl Spalten
+    //ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem(""));
-    ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Titel"));
-    ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Vorname"));
-    ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("Nachname"));
-    ui->tableWidget->setHorizontalHeaderItem(4,new QTableWidgetItem("Geburtsdatum"));
+    ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Titel"));
+    ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Vorname"));
+    ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Nachname"));
+    ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("Geburtsdatum"));
 
     ui->tableWidget->setColumnWidth(0,1);
 
@@ -186,58 +193,42 @@ void MainWindow::tabelle_erzeugen()
 
         Patient* patient = patienten[patienten_nr];
 
-        QWidget *checkBoxWidget = new QWidget();
-        QCheckBox *checkBox = new QCheckBox();
-        QHBoxLayout *layoutCheckBox = new QHBoxLayout(checkBoxWidget);
-        layoutCheckBox->addWidget(checkBox);
-        layoutCheckBox->setAlignment(Qt::AlignCenter);
-
-        checkBox->setChecked(false);
-
         QTableWidgetItem *patientId = new QTableWidgetItem(QString::number(patient->get_patient_id()));
         ui->tableWidget->setVerticalHeaderItem(patienten_nr, patientId);
-        ui->tableWidget->setCellWidget(patienten_nr,0, checkBoxWidget);
 
         QTableWidgetItem *new_titel = new QTableWidgetItem(patient->get_titel());
-        ui->tableWidget->setItem(patienten_nr,1,new_titel);
+        ui->tableWidget->setItem(patienten_nr,0,new_titel);
         QTableWidgetItem *new_vorname = new QTableWidgetItem(patient->get_vorname());
-        ui->tableWidget->setItem(patienten_nr,2,new_vorname);
+        ui->tableWidget->setItem(patienten_nr,1,new_vorname);
         QTableWidgetItem *new_nachname = new QTableWidgetItem(patient->get_nachname());
-        ui->tableWidget->setItem(patienten_nr,3,new_nachname);
-        QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag().toString("dd.MM.yyyy"));
-        ui->tableWidget->setItem(patienten_nr,4,new_geb);
+        ui->tableWidget->setItem(patienten_nr,2,new_nachname);
+        QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag().toString("yyyy.MM.dd"));
+        ui->tableWidget->setItem(patienten_nr,3,new_geb);
     }
 }
 
 int MainWindow::ausgewaehlte_id()
 {
-    int zeilen = ui->tableWidget->rowCount();
-    int patienten_id = 0;
-    bool eins_ausgewaehlt = false;
+    QList<QTableWidgetSelectionRange> ausgewaehlt = ui->tableWidget->selectedRanges();
 
-    for (int i = 0; i < zeilen; i++)
-    {
-        QWidget *item = ui->tableWidget->cellWidget(i,0);
-        QCheckBox* checkB = qobject_cast <QCheckBox *> (item->layout()->itemAt(0)->widget());
+    int ausgewaehlte_Zeile = -1;
 
-        if(checkB->isChecked())
-        {
-            if(eins_ausgewaehlt == false)
-            {
-                  eins_ausgewaehlt = true;
-                  patienten_id = ui->tableWidget->verticalHeaderItem(i)->text().toInt();
-            }else{
-                //Fehlermeldung mehr als ein Patient ausgewählt
-                return -1;
-            }
-        }
-    }
-
-    if (patienten_id == 0)
+    if (ausgewaehlt.size() == 0)
     {
         //Fehlermeldung, dass kein Patient ausgewählt wurde
-        patienten_id = -1;
+    }
+    else if (ausgewaehlt.size() == 1)
+    {
+        QTableWidgetSelectionRange const& nur_eins = ausgewaehlt.at(0);
+
+        ausgewaehlte_Zeile = ui->tableWidget->verticalHeaderItem(nur_eins.topRow())->text().toInt();
+    }
+    else
+    {
+        //Fehlermeldung mehr als ein Patient ausgewählt
     }
 
-    return patienten_id;
+    ui->tableWidget->clearSelection();
+
+    return ausgewaehlte_Zeile;
 }
