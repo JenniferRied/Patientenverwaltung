@@ -178,15 +178,14 @@ void MainWindow::tabelle_erzeugen()
 
     ui->tableWidget->setRowCount(patienten.size());
     ui->tableWidget->setColumnCount(4); //Anzahl Spalten
-    //ui->tableWidget->horizontalHeader()->setDefaultSectionSize(111);  //Breite der Spalten
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Titel"));
-    ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Vorname"));
-    ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Nachname"));
-    ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("Geburtsdatum"));
+    ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Id"));
+    ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Titel"));
+    ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Vorname"));
+    ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("Nachname"));
+    ui->tableWidget->setHorizontalHeaderItem(4,new QTableWidgetItem("Geburtsdatum"));
 
-    ui->tableWidget->setColumnWidth(0,1);
 
     for (int patienten_nr = 0; patienten_nr < patienten.size(); patienten_nr++)
     {
@@ -194,17 +193,21 @@ void MainWindow::tabelle_erzeugen()
         Patient* patient = patienten[patienten_nr];
 
         QTableWidgetItem *patientId = new QTableWidgetItem(QString::number(patient->get_patient_id()));
-        ui->tableWidget->setVerticalHeaderItem(patienten_nr, patientId);
-
+        patientId->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(patienten_nr,0,patientId);
         QTableWidgetItem *new_titel = new QTableWidgetItem(patient->get_titel());
-        ui->tableWidget->setItem(patienten_nr,0,new_titel);
+        ui->tableWidget->setItem(patienten_nr,1,new_titel);
         QTableWidgetItem *new_vorname = new QTableWidgetItem(patient->get_vorname());
-        ui->tableWidget->setItem(patienten_nr,1,new_vorname);
+        ui->tableWidget->setItem(patienten_nr,2,new_vorname);
         QTableWidgetItem *new_nachname = new QTableWidgetItem(patient->get_nachname());
-        ui->tableWidget->setItem(patienten_nr,2,new_nachname);
+        ui->tableWidget->setItem(patienten_nr,3,new_nachname);
         QTableWidgetItem *new_geb = new QTableWidgetItem(patient->get_geburtstag().toString("yyyy.MM.dd"));
-        ui->tableWidget->setItem(patienten_nr,3,new_geb);
+        ui->tableWidget->setItem(patienten_nr,4,new_geb);
     }
+
+    ui->tableWidget->horizontalHeader()->setMinimumSectionSize(1);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+    ui->tableWidget->setColumnWidth(0, 30);
 }
 
 int MainWindow::ausgewaehlte_id()
@@ -221,7 +224,7 @@ int MainWindow::ausgewaehlte_id()
     {
         QTableWidgetSelectionRange const& nur_eins = ausgewaehlt.at(0);
 
-        ausgewaehlte_Zeile = ui->tableWidget->verticalHeaderItem(nur_eins.topRow())->text().toInt();
+        ausgewaehlte_Zeile = ui->tableWidget->item(nur_eins.topRow(), 0)->text().toInt();
     }
     else
     {
