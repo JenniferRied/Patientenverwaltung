@@ -17,9 +17,11 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     geschlecht.append("d");
     ui->geschlecht_comboBox->addItems(geschlecht);
 
-    if (patienten_id > 0)
-    {
+    if (patienten_id > 0) {
+        setWindowTitle("Patient editieren");
         patienten_editieren(patienten_id);
+    } else {
+        setWindowTitle("Neuer Patient");
     }
 
     connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (datechange(QDate)));
