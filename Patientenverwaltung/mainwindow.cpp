@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "verwaltung.h"
+#include "suchen.h"
 
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -95,6 +96,24 @@ void MainWindow::loeschen_buttonclick()
 
 void MainWindow::suchen_buttonclick()
 {
+    Suchen *suche = new Suchen();
+    suche->show();
+
+    QString ergebnis = suche->get_suchen_text();                            //For-Schleife soll die Tabelleneinträge durchlaufen und im Anschluss alle Einträge, welche nicht
+    for(int i= 0; i < ui->tableWidget->rowCount(); i++){                    //dem Suchbegriff entsprechen, versteckt werden
+        bool treffer = false;                                               //Dazu muss ich die MainWindow-UI in suchen.cpp aufrufen, was mir aktuell nicht gelingt.
+        for(int j = 0; j < ui->tableWidget->columnCount(); j++){
+            QTableWidgetItem *eintrag = ui->tableWidget->item(i, j);
+            if( eintrag->text().contains(ergebnis))
+            {
+                treffer = true;
+                break;
+            }
+        }
+        ui->tableWidget->setRowHidden( i, !treffer);
+    }
+
+
 
 }
 
