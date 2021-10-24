@@ -126,7 +126,7 @@ void MainWindow::export_buttonclick()
     for (int i = 0; i < ausgewaehlte_zeilen.size(); i++)
     {
         int zeile = ausgewaehlte_zeilen.at(i).topRow();
-        int id = ui->tableWidget->verticalHeaderItem(zeile)->text().toInt();
+        int id = ui->tableWidget->item(zeile,0)->text().toInt();
         Patient* patient= Speicher::getInstance().get_patient(id);
         patienten.append(patient);
     }
