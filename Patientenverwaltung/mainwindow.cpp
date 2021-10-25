@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     QIcon* suche = new QIcon(":/Bilder/clipart28741.png");
     //https://www.clipartmax.com/download/m2i8H7m2G6d3A0N4_email-free-clip-art-envelope-clipart-transparent-background/
     QIcon* export_icon = new QIcon(":/Bilder/clipart611030.png");
+    //https://www.clipartmax.com/download/m2i8K9b1N4i8A0A0_user-image-clip-art/
+    QIcon* anzeigen_icon = new QIcon(":/Bilder/clipart153137.png");
 
     QSize iconSize;
     iconSize.setWidth(60);
@@ -49,6 +51,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->suchen_button->setIconSize(iconSize);
     ui->export_button->setIcon(*export_icon);
     ui->export_button->setIconSize(iconSize);
+    ui->anzeigen_button->setIcon(*anzeigen_icon);
+    ui->anzeigen_button->setIconSize(iconSize);
+
+    //Tool Tips
+
+    ui->hinzufuegen_button->setToolTip("Patienten hinzufügen");
+    ui->aendern_button->setToolTip("Patientendaten ändern");
+    ui->loeschen_button->setToolTip("Patienten löschen");
+    ui->anzeigen_button->setToolTip("Patienten anzeigen");
+    ui->suchen_button->setToolTip("Suche");
+    ui->export_button->setToolTip("Auswahl exportieren");
 
     ui->widget->setVisible(false);
     Speicher::getInstance().beobachter_anhaengen(this);
