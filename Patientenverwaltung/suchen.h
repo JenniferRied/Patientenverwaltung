@@ -18,15 +18,16 @@ class Suchen : public QDialog
 public:
      Suchen(QWidget *parent = 0);
      QString get_suchen_text();
-
+     QString suchen_text;
+     Suchen *suche;
 public slots:
      void button_gedrueckt();
 
 private:
      QPushButton *button;
      QLineEdit *suchleiste;
-     QString suchen_text;
-     Suchen *suche;
+
+
 };
 
 #endif // SUCHE_H

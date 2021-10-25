@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->anzeigen_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
     connect(ui->schliessen_button,SIGNAL (clicked()),this, SLOT(anzeige_schliessen_buttonclick()));
     connect(ui->suche_beenden_button, SIGNAL (clicked()),this, SLOT(suche_beenden_buttonclick()));
+    connect(ui->suche_starten_button, SIGNAL (clicked()),this, SLOT(suche_starten_buttoncklick()));
 
     //Icons
 
@@ -112,10 +113,23 @@ void MainWindow::loeschen_buttonclick()
 void MainWindow::suchen_buttonclick()
 {
     ui->suchen_widget->setVisible(true);
+}
 
-
-
-
+void MainWindow::suche_starten_buttoncklick()
+{
+    QString nachname = ui->nachname_lineEdit->text();
+    QString vorname = ui->nachname_lineEdit->text();
+    nachname_suchen_text = nachname;
+    vorname_suchen_text = vorname;
+    if (nachname.isEmpty()) {                                               //If-Abfrage prüft, ob ein Name eingegeben wurde, falls nicht kommt eine Meldung
+        QMessageBox::information(this, tr("Leeres Feld"),               //Verstecken der nicht gesuchten Einträge steht bei suchen_buttonClick in mainwindow.cpp
+                                 tr("Bitte einen Namen eingeben"));
+        return;
+    } else {
+        nachname_suchen_text = nachname_text;
+        suchleiste->clear();
+        hide();
+    }
 }
 
 void MainWindow::suche_beenden_buttonclick()

@@ -123,6 +123,50 @@
      </layout>
     </item>
     <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QWidget" name="suchen_widget" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="nachname_suchen_label">
+           <property name="text">
+            <string>Nachname:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="nachname_lineEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="vorname_suchen_label">
+           <property name="text">
+            <string>Vorname:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="vorname_lineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="suche_starten_button">
+           <property name="text">
+            <string>Suchen</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="suche_beenden_button">
+           <property name="text">
+            <string>Suche beenden</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QTableWidget" name="tableWidget">

@@ -33,7 +33,7 @@ Suchen::Suchen(QWidget *parent)
 void Suchen::button_gedrueckt()
 {
     QString text = suchleiste->text();
-
+    suchen_text = text;
     if (text.isEmpty()) {                                               //If-Abfrage prüft, ob ein Name eingegeben wurde, falls nicht kommt eine Meldung
         QMessageBox::information(this, tr("Leeres Feld"),               //Verstecken der nicht gesuchten Einträge steht bei suchen_buttonClick in mainwindow.cpp
                                  tr("Bitte einen Namen eingeben"));
@@ -47,5 +47,6 @@ void Suchen::button_gedrueckt()
 
 QString Suchen::get_suchen_text()
 {
+    //MainWindow::get_suchtext(suchen_text);
     return suchen_text;
 }
