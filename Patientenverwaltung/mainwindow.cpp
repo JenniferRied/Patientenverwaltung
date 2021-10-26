@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //Buttons im MainWindow
-
     connect(ui->hinzufuegen_button, SIGNAL (clicked()),this, SLOT (hinzufuegen_buttonclick()));
     connect(ui->aendern_button, SIGNAL (clicked()),this, SLOT (aendern_buttonclick()));
     connect(ui->loeschen_button, SIGNAL (clicked()),this, SLOT (loeschen_buttonclick()));
@@ -121,17 +120,19 @@ void MainWindow::suche_starten_buttonclick()
 {
     QString vorname = ui->vorname_lineEdit->text();
     QString nachname = ui->nachname_lineEdit->text();
-    QString suchtext = vorname + nachname;
     for(int i = 0; i < ui->tableWidget->rowCount(); i++){
             bool treffer = false;
             for(int j = 0; j < ui->tableWidget->columnCount(); j++){
                 QTableWidgetItem *eintrag = ui->tableWidget->item(i, j);
-                /*if( eintrag->text().contains(vorname) or eintrag->text().contains(nachname) or eintrag->text().contains(vorname + nachname))
+                if(!ui->vorname_lineEdit->text().isEmpty() && !ui->nachname_lineEdit->text().isEmpty())
                 {
-                    treffer = true;
-                    break;
-                }*/
-                if(eintrag->text().contains(suchtext))
+                    if( eintrag->text().contains(vorname) or eintrag->text().contains(nachname) )
+                    {
+                        treffer = true;
+                        break;
+                    }
+                }
+                if( eintrag->text().contains(vorname + nachname))
                 {
                     treffer = true;
                     break;
