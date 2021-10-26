@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "verwaltung.h"
-#include "suchen.h"
 
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -23,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->anzeigen_button, SIGNAL (clicked()),this, SLOT (anzeigen_buttonclick()));
     connect(ui->schliessen_button,SIGNAL (clicked()),this, SLOT(anzeige_schliessen_buttonclick()));
     connect(ui->suche_beenden_button, SIGNAL (clicked()),this, SLOT(suche_beenden_buttonclick()));
+    connect(ui->suche_starten_button, SIGNAL (clicked()),this, SLOT(suche_starten_buttonclick()));
 
     //Icons
 
@@ -113,40 +113,40 @@ void MainWindow::suchen_buttonclick()
 {
     ui->suchen_widget->setVisible(true);
 
+}
 
-
+void MainWindow::suche_starten_buttonclick()
+{
+    QString vorname = ui->vorname_lineEdit->text();
+    QString nachname = ui->nachname_lineEdit->text();
+    for(int i = 0; i < ui->tableWidget->rowCount(); i++){
+            bool treffer = false;
+            for(int j = 0; j < ui->tableWidget->columnCount(); j++){
+                QTableWidgetItem *eintrag = ui->tableWidget->item(i, j);
+                if( eintrag->text().contains(vorname) or eintrag->text().contains(nachname) or eintrag->text().contains(vorname + nachname))
+                {
+                    treffer = true;
+                    break;
+                }
+            }
+            ui->tableWidget->setRowHidden( i, !treffer);
+            kein_treffer.append(*ui->tableWidget->item( i, !treffer));
+        }
 
 }
+
 
 void MainWindow::suche_beenden_buttonclick()
 {
     ui->suchen_widget->setVisible(false);
     ui->nachname_lineEdit->setText("");
     ui->vorname_lineEdit->setText("");
+    for(int i = 0; i < kein_treffer.size(); i++)
+    {
+        ui->tableWidget->showRow(i);
+    }
     tabelle_erzeugen();
 }
-
-
-//void MainWindow::suchen(Suchen suche)
-//{
-    //QString ergebnis = "";//suche->get_suchen_text();                            //For-Schleife soll die Tabelleneinträge durchlaufen und im Anschluss alle Einträge, welche nicht
-    //ergebnis = suche.suchen_text;
-    //ui->label->setText(ergebnis);
-    /*for(int i= 0; i < ui->tableWidget->rowCount(); i++){                    //dem Suchbegriff entsprechen, versteckt werden
-        bool treffer = false;                                               //Dazu muss ich die MainWindow-UI in suchen.cpp aufrufen, was mir aktuell nicht gelingt.
-        for(int j = 0; j < ui->tableWidget->columnCount(); j++){
-            QTableWidgetItem *eintrag = ui->tableWidget->item(i, j);
-            if( eintrag->text().contains(ergebnis))
-            {
-                treffer = true;
-                break;
-            }
-        }
-        ui->tableWidget->setRowHidden( i, !treffer);
-    }
-
-}*/
-
 
 void MainWindow::export_buttonclick()
 {

@@ -3,6 +3,7 @@
 #include "patient.h"
 #include "speicher.h"
 #include <list>
+#include <QMessageBox>
 
 Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     QDialog(parent),
@@ -39,6 +40,15 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
 void Verwaltung::save()
 {
     QString geschl;
+
+    if (ui->geschlecht_comboBox->currentText() == " ")
+    {
+            QMessageBox fehlermeldung;
+            fehlermeldung.critical(0, "Fehler", "Bitte ein Geschlecht auswählen");
+
+    }
+    else
+    {
     if (ui->geschlecht_comboBox->currentText() == "w")
     {
         geschl = "weiblich";
@@ -78,6 +88,7 @@ void Verwaltung::save()
     }
 
     data.update_patient(patient);
+    }
 }
 
 void Verwaltung::patienten_editieren(int patienten_id)

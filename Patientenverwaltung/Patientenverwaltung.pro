@@ -24,14 +24,12 @@ SOURCES += \
     mainwindow.cpp \
     patient.cpp \
     speicher.cpp \
-    suchen.cpp \
     verwaltung.cpp
 
 HEADERS += \
     mainwindow.h \
     patient.h \
     speicher.h \
-    suchen.h \
     verwaltung.h
 
 FORMS += \

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "speicher.h"
-#include "suchen.h"
+#include <QTableWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,13 +26,14 @@ public slots:
     void export_buttonclick();
     void anzeigen_buttonclick();
     void anzeige_schliessen_buttonclick();
+    void suche_starten_buttonclick();
     void suche_beenden_buttonclick();
-    void suchen(Suchen);
 
 private:
     Ui::MainWindow *ui;
 
     void tabelle_erzeugen();
     int ausgewaehlte_id();
+    QList<QTableWidgetItem> kein_treffer;
 };
 #endif // MAINWINDOW_H
