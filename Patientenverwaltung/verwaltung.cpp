@@ -167,8 +167,24 @@ void Verwaltung::change()
     //Alters-Berechnung
     QString birthday = geb.toString("yyyy.MM.dd");
     int birth_year = geb.year();
+    QString geburtsjahr = QString::number(birth_year);
+    int birth_month = geb.month();
+    QString geburtsmonat = QString::number(birth_month);
+    int birth_day = geb.day();
+    QString geburtstag = QString::number(birth_day);
     int current_year = QDate::currentDate().year();
-    int alter = current_year - birth_year;
+    int current_month = QDate::currentDate().month();
+    int current_day = QDate::currentDate().day();
+
+    int jahr = current_year - birth_year;
+    int monat = current_month - birth_month;
+    int tag = current_day - birth_day;
+    int alter = jahr;
+
+    if(monat < 0 || (monat == 0 && tag < 0))
+    {
+        alter = alter - 1;
+    }
     QString age = QString::number(alter);
     ui->eingaben->setText(title +" "+ firstname +" "+ lastname +"\n"+ birthday +"("+ age +") \n"+ geschl +"\n"+ street +" "+ hnr +"\n"+ regc +" "+ place +"\n"+ phone);
 }
