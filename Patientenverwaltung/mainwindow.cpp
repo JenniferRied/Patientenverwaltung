@@ -121,6 +121,7 @@ void MainWindow::suche_starten_buttonclick()
     QString vorname = ui->vorname_lineEdit->text();
     QString nachname = ui->nachname_lineEdit->text();
     QString geburtstag = ui->geburtstag_suche_lineEdit->text();
+    bool keine_eingabe = false;
     for(int i = 0; i < ui->tableWidget->rowCount(); i++){
             bool treffer = false;
             for(int j = 0; j < ui->tableWidget->columnCount(); j++){
@@ -129,6 +130,15 @@ void MainWindow::suche_starten_buttonclick()
                 QTableWidgetItem *eintrag3 = ui->tableWidget->item(i,j+2);
 
                 //Eingabe cases
+
+                //Fehlermeldung wenn kein Feld ausgefüllt wurde
+
+
+                if(ui->geburtstag_suche_lineEdit->text().isEmpty() && ui->vorname_lineEdit->text().isEmpty() && ui->nachname_lineEdit->text().isEmpty())
+                {
+                    keine_eingabe = true;
+                }
+
 
                 if(!ui->vorname_lineEdit->text().isEmpty() && !ui->nachname_lineEdit->text().isEmpty())
                 {
@@ -206,10 +216,17 @@ void MainWindow::suche_starten_buttonclick()
                     }
                 }
 
+
+
             }
             ui->tableWidget->setRowHidden( i, !treffer);
             kein_treffer.append(*ui->tableWidget->item( i, !treffer));
         }
+    if(keine_eingabe == true)
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Sie müssen mindestens 1 Feld für die Suche ausfüllen.");
+    }
 
 }
 
