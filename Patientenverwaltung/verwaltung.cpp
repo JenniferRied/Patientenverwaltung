@@ -47,6 +47,39 @@ void Verwaltung::abgebrochen()
 void Verwaltung::ueberpruefen()
 {
     bool fehler = false;
+    bool fehlerhafte_eingabe = false;
+
+    //Fehlermeldung bezüglich ungülteger Eingabe
+    if(ui->titel_lineEdit->text().contains("1")||ui->titel_lineEdit->text().contains("2")||ui->titel_lineEdit->text().contains("3")||ui->titel_lineEdit->text().contains("4")||ui->titel_lineEdit->text().contains("5")
+            ||ui->titel_lineEdit->text().contains("6")||ui->titel_lineEdit->text().contains("7")||ui->titel_lineEdit->text().contains("8")||ui->titel_lineEdit->text().contains("9")||ui->titel_lineEdit->text().contains("0"))
+    {
+        fehlerhafte_eingabe = true;
+    }
+
+    if(ui->nachname_lineEdit->text().contains("1")||ui->nachname_lineEdit->text().contains("2")||ui->nachname_lineEdit->text().contains("3")||ui->nachname_lineEdit->text().contains("4")||ui->nachname_lineEdit->text().contains("5")
+            ||ui->nachname_lineEdit->text().contains("6")||ui->nachname_lineEdit->text().contains("7")||ui->nachname_lineEdit->text().contains("8")||ui->nachname_lineEdit->text().contains("9")||ui->nachname_lineEdit->text().contains("0"))
+    {
+        fehlerhafte_eingabe = true;
+    }
+
+    if(ui->vorname_lineEdit->text().contains("1")||ui->vorname_lineEdit->text().contains("2")||ui->vorname_lineEdit->text().contains("3")||ui->vorname_lineEdit->text().contains("4")||ui->vorname_lineEdit->text().contains("5")
+            ||ui->vorname_lineEdit->text().contains("6")||ui->vorname_lineEdit->text().contains("7")||ui->vorname_lineEdit->text().contains("8")||ui->vorname_lineEdit->text().contains("9")||ui->vorname_lineEdit->text().contains("0"))
+    {
+        fehlerhafte_eingabe = true;
+    }
+
+    if(ui->strasse_lineEdit->text().contains("1")||ui->strasse_lineEdit->text().contains("2")||ui->strasse_lineEdit->text().contains("3")||ui->strasse_lineEdit->text().contains("4")||ui->strasse_lineEdit->text().contains("5")
+            ||ui->strasse_lineEdit->text().contains("6")||ui->strasse_lineEdit->text().contains("7")||ui->strasse_lineEdit->text().contains("8")||ui->strasse_lineEdit->text().contains("9")||ui->strasse_lineEdit->text().contains("0"))
+    {
+        fehlerhafte_eingabe = true;
+    }
+
+    if(ui->ort_lineEdit->text().contains("1")||ui->ort_lineEdit->text().contains("2")||ui->ort_lineEdit->text().contains("3")||ui->ort_lineEdit->text().contains("4")||ui->ort_lineEdit->text().contains("5")
+            ||ui->ort_lineEdit->text().contains("6")||ui->ort_lineEdit->text().contains("7")||ui->ort_lineEdit->text().contains("8")||ui->ort_lineEdit->text().contains("9")||ui->ort_lineEdit->text().contains("0"))
+    {
+        fehlerhafte_eingabe = true;
+    }
+
     if (ui->nachname_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keinen Nachnamen eingetragen
@@ -112,6 +145,12 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
+    if(fehlerhafte_eingabe == true)
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Ungültige Eingabe! Bitte überprüfen sie ihre Eingabe.");
+        fehler = true;
+    }
     if( fehler == false)
     {
         save();
