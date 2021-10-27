@@ -26,14 +26,14 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     }
 
     connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (datechange(QDate)));
-    connect(ui->titel_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->nachname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->vorname_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->ort_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->strasse_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->hnr_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->plz_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->tel_nr_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->titel_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->nachname_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->vorname_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->ort_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->strasse_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->hnr_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->plz_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->tel_nr_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->geschlecht_comboBox, SIGNAL (currentTextChanged(QString)), this, SLOT (textchange(QString)));
     connect(ui->speichern_button,SIGNAL (clicked()),this, SLOT (ueberpruefen()));
     connect(ui->abbrechen_button, SIGNAL (clicked()), this, SLOT(abgebrochen()));
@@ -47,7 +47,7 @@ void Verwaltung::abgebrochen()
 void Verwaltung::ueberpruefen()
 {
     bool fehler = false;
-    if (ui->nachname_textEdit->toPlainText().isEmpty())
+    if (ui->nachname_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keinen Nachnamen eingetragen
         QMessageBox fehlermeldung;
@@ -55,7 +55,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->vorname_textEdit->toPlainText().isEmpty())
+    if (ui->vorname_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keinen Vornamen eingetragen
         QMessageBox fehlermeldung;
@@ -72,7 +72,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->tel_nr_textEdit->toPlainText().isEmpty())
+    if (ui->tel_nr_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keine Telefonnummer eingetragen
         QMessageBox fehlermeldung;
@@ -80,7 +80,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->strasse_textEdit->toPlainText().isEmpty())
+    if (ui->strasse_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keine Straße eingetragen
         QMessageBox fehlermeldung;
@@ -88,7 +88,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->hnr_textEdit->toPlainText().isEmpty())
+    if (ui->hnr_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keine Hausnummer eingetragen
         QMessageBox fehlermeldung;
@@ -96,7 +96,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->plz_textEdit->toPlainText().isEmpty())
+    if (ui->plz_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keine Postleitzahl eingetragen
         QMessageBox fehlermeldung;
@@ -104,7 +104,7 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->ort_textEdit->toPlainText().isEmpty())
+    if (ui->ort_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keinen Ort eingetragen
         QMessageBox fehlermeldung;
@@ -135,9 +135,9 @@ void Verwaltung::save()
         geschl = "divers";
     }
 
-    Patient* patient = new Patient(ui->titel_textEdit->toPlainText(),ui->nachname_textEdit->toPlainText(), ui->vorname_textEdit->toPlainText(), ui->strasse_textEdit->toPlainText(),
-                                   ui->ort_textEdit->toPlainText(), ui->hnr_textEdit->toPlainText().toInt(),ui->plz_textEdit->toPlainText().toInt(),0,ui->geb_dateEdit->date(),
-                                   ui->tel_nr_textEdit->toPlainText(),geschl);
+    Patient* patient = new Patient(ui->titel_lineEdit->text(),ui->nachname_lineEdit->text(), ui->vorname_lineEdit->text(), ui->strasse_lineEdit->text(),
+                                   ui->ort_lineEdit->text(), ui->hnr_lineEdit->text().toInt(),ui->plz_lineEdit->text().toInt(),0,ui->geb_dateEdit->date(),
+                                   ui->tel_nr_lineEdit->text(),geschl);
 
     Speicher& data = Speicher::getInstance();
 
@@ -167,14 +167,14 @@ void Verwaltung::save()
 void Verwaltung::patienten_editieren(int patienten_id)
 {
     Patient* patient = Speicher::getInstance().get_patient(patienten_id);
-    ui->titel_textEdit->setText(patient->get_titel());
-    ui->nachname_textEdit->setText(patient->get_nachname());
-    ui->vorname_textEdit->setText(patient->get_vorname());
-    ui->ort_textEdit->setText(patient->get_ort());
-    ui->strasse_textEdit->setText(patient->get_strasse());
-    ui->hnr_textEdit->setText(QString::number(patient->get_hnr()));
-    ui->plz_textEdit->setText(QString::number(patient->get_plz()));
-    ui->tel_nr_textEdit->setText(patient->get_tel());
+    ui->titel_lineEdit->setText(patient->get_titel());
+    ui->nachname_lineEdit->setText(patient->get_nachname());
+    ui->vorname_lineEdit->setText(patient->get_vorname());
+    ui->ort_lineEdit->setText(patient->get_ort());
+    ui->strasse_lineEdit->setText(patient->get_strasse());
+    ui->hnr_lineEdit->setText(QString::number(patient->get_hnr()));
+    ui->plz_lineEdit->setText(QString::number(patient->get_plz()));
+    ui->tel_nr_lineEdit->setText(patient->get_tel());
     ui->geb_dateEdit->setDate(patient->get_geburtstag());
 
     QString geschlecht = patient->get_geschlecht();
@@ -204,14 +204,14 @@ void Verwaltung::textchange(QString)
 
 void Verwaltung::change()
 {
-    QString title = ui->titel_textEdit->toPlainText();
-    QString lastname = ui->nachname_textEdit->toPlainText();
-    QString firstname = ui->vorname_textEdit->toPlainText();
-    QString place = ui->ort_textEdit->toPlainText();
-    QString street = ui->strasse_textEdit->toPlainText();
-    int housenumber = ui->hnr_textEdit->toPlainText().toInt();
-    int region_code = ui->plz_textEdit->toPlainText().toInt();
-    QString phone = ui->tel_nr_textEdit->toPlainText();
+    QString title = ui->titel_lineEdit->text();
+    QString lastname = ui->nachname_lineEdit->text();
+    QString firstname = ui->vorname_lineEdit->text();
+    QString place = ui->ort_lineEdit->text();
+    QString street = ui->strasse_lineEdit->text();
+    int housenumber = ui->hnr_lineEdit->text().toInt();
+    int region_code = ui->plz_lineEdit->text().toInt();
+    QString phone = ui->tel_nr_lineEdit->text();
     QString sex = ui->geschlecht_comboBox->currentText();
     QDate geb = ui->geb_dateEdit->date();
     QString hnr = " ";

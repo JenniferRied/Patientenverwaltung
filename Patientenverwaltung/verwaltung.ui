@@ -41,71 +41,32 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Titel:</string>
+            <string>*Titel:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QTextEdit" name="titel_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>Nachname:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QTextEdit" name="nachname_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
             <string>Vorname:</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QTextEdit" name="vorname_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>Geburtsdatum:</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="6" column="1">
           <widget class="QDateEdit" name="geb_dateEdit">
            <property name="dateTime">
             <datetime>
@@ -125,41 +86,28 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="7" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>Geschlecht:</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="7" column="1">
           <widget class="QComboBox" name="geschlecht_comboBox">
            <property name="currentText">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="8" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
             <string>Telefonnummer:</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
-          <widget class="QTextEdit" name="tel_nr_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
+         <item row="5" column="0">
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -175,7 +123,7 @@
            </property>
           </spacer>
          </item>
-         <item row="7" column="0">
+         <item row="9" column="0">
           <spacer name="verticalSpacer_2">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -191,83 +139,62 @@
            </property>
           </spacer>
          </item>
-         <item row="8" column="0">
+         <item row="10" column="0">
           <widget class="QLabel" name="label_8">
            <property name="text">
             <string>Straße:</string>
            </property>
           </widget>
          </item>
-         <item row="8" column="1">
-          <widget class="QTextEdit" name="strasse_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
+         <item row="12" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>Hnr.:</string>
            </property>
           </widget>
          </item>
-         <item row="9" column="1">
-          <widget class="QTextEdit" name="hnr_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0">
+         <item row="14" column="0">
           <widget class="QLabel" name="label_9">
            <property name="text">
             <string>Postleitzahl:</string>
            </property>
           </widget>
          </item>
-         <item row="10" column="1">
-          <widget class="QTextEdit" name="plz_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
+         <item row="16" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
             <string>Ort:</string>
            </property>
           </widget>
          </item>
-         <item row="11" column="1">
-          <widget class="QTextEdit" name="ort_textEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="tabChangesFocus">
-            <bool>true</bool>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="titel_lineEdit"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="nachname_lineEdit"/>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="vorname_lineEdit"/>
+         </item>
+         <item row="8" column="1">
+          <widget class="QLineEdit" name="tel_nr_lineEdit"/>
+         </item>
+         <item row="10" column="1">
+          <widget class="QLineEdit" name="strasse_lineEdit"/>
+         </item>
+         <item row="12" column="1">
+          <widget class="QLineEdit" name="hnr_lineEdit"/>
+         </item>
+         <item row="14" column="1">
+          <widget class="QLineEdit" name="plz_lineEdit"/>
+         </item>
+         <item row="16" column="1">
+          <widget class="QLineEdit" name="ort_lineEdit"/>
+         </item>
+         <item row="17" column="0" colspan="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>*optionales Feld</string>
            </property>
           </widget>
          </item>
