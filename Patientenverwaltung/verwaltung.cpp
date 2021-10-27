@@ -4,12 +4,25 @@
 #include "speicher.h"
 #include <list>
 #include <QMessageBox>
+#include <QRegExp>
+#include <QRegExpValidator>
 
 Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Verwaltung)
 {
     ui->setupUi(this);
+
+    QRegExp rx_tel("[0]{1}\\d{1,20}");
+    rx_tel.setCaseSensitivity(Qt::CaseInsensitive);
+    QValidator *tel_validator = new QRegExpValidator(rx_tel, this);
+    ui->tel_nr_lineEdit->setValidator(tel_validator);
+    ui->tel_nr_lineEdit->setMaxLength(21);
+
+    QRegExp rx_plz("[0-9]{5}");
+    QValidator *plz_validator = new QRegExpValidator(rx_plz, this);
+    ui->plz_lineEdit->setValidator(plz_validator);
+    ui->plz_lineEdit->setMaxLength(5);
 
     QList<QString> geschlecht;
     geschlecht.append(" ");
@@ -26,14 +39,14 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     }
 
     connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (datechange(QDate)));
-    connect(ui->titel_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->nachname_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->vorname_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->ort_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->strasse_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->hnr_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->plz_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
-    connect(ui->tel_nr_lineEdit, SIGNAL (textChanged()), this , SLOT (change()));
+    connect(ui->titel_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->nachname_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->vorname_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->ort_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->strasse_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->hnr_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->plz_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
+    connect(ui->tel_nr_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
     connect(ui->geschlecht_comboBox, SIGNAL (currentTextChanged(QString)), this, SLOT (textchange(QString)));
     connect(ui->speichern_button,SIGNAL (clicked()),this, SLOT (ueberpruefen()));
     connect(ui->abbrechen_button, SIGNAL (clicked()), this, SLOT(abgebrochen()));
@@ -47,6 +60,7 @@ void Verwaltung::abgebrochen()
 void Verwaltung::ueberpruefen()
 {
     bool fehler = false;
+
     bool fehlerhafte_eingabe = false;
 
     //Fehlermeldung bezüglich ungülteger Eingabe
@@ -134,6 +148,13 @@ void Verwaltung::ueberpruefen()
         //Fehlermeldung für keine Postleitzahl eingetragen
         QMessageBox fehlermeldung;
         fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Postleitzahl ein");
+        fehler = true;
+    }
+
+    if (ui->plz_lineEdit->text().length() != 5)
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Die Postleitzahl hat weniger als 5 Ziffern.");
         fehler = true;
     }
 

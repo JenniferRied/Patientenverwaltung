@@ -361,7 +361,7 @@ int MainWindow::ausgewaehlte_id()
     {
         //Fehlermeldung mehr als ein Patient ausgewählt
         QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte nur 1 Patienten auswählen");
+        fehlermeldung.critical(0, "Fehler", "Bitte nur einen Patienten auswählen");
     }
 
     ui->tableWidget->clearSelection();
