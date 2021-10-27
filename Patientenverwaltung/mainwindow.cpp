@@ -236,7 +236,7 @@ void MainWindow::tabelle_erzeugen()
     QList<Patient*> patienten = Speicher::getInstance().get_alle_patienten();
 
     ui->tableWidget->setRowCount(patienten.size());
-    ui->tableWidget->setColumnCount(4); //Anzahl Spalten
+    ui->tableWidget->setColumnCount(5); //Anzahl Spalten
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Id"));
