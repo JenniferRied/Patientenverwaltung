@@ -148,6 +148,16 @@
           <widget class="QLineEdit" name="vorname_lineEdit"/>
          </item>
          <item>
+          <widget class="QLabel" name="geburtstag_suche_label">
+           <property name="text">
+            <string>Geburtsdatum:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="geburtstag_suche_lineEdit"/>
+         </item>
+         <item>
           <widget class="QPushButton" name="suche_starten_button">
            <property name="text">
             <string>Suchen</string>

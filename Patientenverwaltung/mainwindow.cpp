@@ -120,23 +120,92 @@ void MainWindow::suche_starten_buttonclick()
 {
     QString vorname = ui->vorname_lineEdit->text();
     QString nachname = ui->nachname_lineEdit->text();
+    QString geburtstag = ui->geburtstag_suche_lineEdit->text();
     for(int i = 0; i < ui->tableWidget->rowCount(); i++){
             bool treffer = false;
             for(int j = 0; j < ui->tableWidget->columnCount(); j++){
                 QTableWidgetItem *eintrag = ui->tableWidget->item(i, j);
+                QTableWidgetItem *eintrag2 = ui->tableWidget->item(i,j+1);
+                QTableWidgetItem *eintrag3 = ui->tableWidget->item(i,j+2);
+
+                //Eingabe cases
+
                 if(!ui->vorname_lineEdit->text().isEmpty() && !ui->nachname_lineEdit->text().isEmpty())
                 {
-                    if( eintrag->text().contains(vorname) or eintrag->text().contains(nachname) )
+                    //alle 3 Felder ausgefüllt
+
+                    if(!ui->geburtstag_suche_lineEdit->text().isEmpty())
+                    {
+                        if( eintrag->text() == vorname and eintrag2->text() == nachname and eintrag3->text() == geburtstag)
+                        {
+                            treffer = true;
+                            break;
+                        }
+                    }
+
+                    //Vor und Nachname ausgefüllt
+
+                    if(ui->geburtstag_suche_lineEdit->text().isEmpty())
+                    {
+                        if( eintrag->text()== vorname and eintrag2->text() == nachname )
+                        {
+                            treffer = true;
+                            break;
+                        }
+                    }
+                }
+
+
+
+                if(!ui->vorname_lineEdit->text().isEmpty() || !ui->nachname_lineEdit->text().isEmpty())
+                {
+                    //nur 1 der Namensfelder ausgefüllt
+
+                    if(ui->geburtstag_suche_lineEdit->text().isEmpty())
+                    {
+                        if( eintrag->text().contains(vorname + nachname))
+                        {
+                            treffer = true;
+                            break;
+                        }
+                    }
+
+                    //Geburtsdatumsfeld ebenfalls ausgefüllt
+                    if(!ui->geburtstag_suche_lineEdit->text().isEmpty())
+                    {
+                        //Vorname und Geburtsdatumsfeld ausgefüllt
+                        if(!ui->vorname_lineEdit->text().isEmpty())
+                        {
+                            if(eintrag->text() == vorname && eintrag3->text() == geburtstag)
+                            {
+                                treffer = true;
+                                break;
+                            }
+                        }
+                        //Nachname und Geburtsdatumsfeld ausgefüllt
+                        else
+                        {
+                            if(eintrag->text() == nachname && eintrag2->text() == geburtstag)
+                            {
+                                treffer = true;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+
+                //Nur Geburtsdatumsfeld ausgefüllt
+
+                if(ui->vorname_lineEdit->text().isEmpty() && ui->nachname_lineEdit->text().isEmpty())
+                {
+                    if(eintrag->text().contains(geburtstag))
                     {
                         treffer = true;
                         break;
                     }
                 }
-                if( eintrag->text().contains(vorname + nachname))
-                {
-                    treffer = true;
-                    break;
-                }
+
             }
             ui->tableWidget->setRowHidden( i, !treffer);
             kein_treffer.append(*ui->tableWidget->item( i, !treffer));
@@ -150,6 +219,7 @@ void MainWindow::suche_beenden_buttonclick()
     ui->suchen_widget->setVisible(false);
     ui->nachname_lineEdit->setText("");
     ui->vorname_lineEdit->setText("");
+    ui->geburtstag_suche_lineEdit->setText("");
     for(int i = 0; i < kein_treffer.size(); i++)
     {
         ui->tableWidget->showRow(i);
