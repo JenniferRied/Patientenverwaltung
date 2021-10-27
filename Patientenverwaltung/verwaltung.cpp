@@ -35,20 +35,93 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     connect(ui->plz_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->tel_nr_textEdit, SIGNAL (textChanged()), this , SLOT (change()));
     connect(ui->geschlecht_comboBox, SIGNAL (currentTextChanged(QString)), this, SLOT (textchange(QString)));
-    connect(ui->buttonBox,SIGNAL (accepted()),this, SLOT (save()));
+    connect(ui->speichern_button,SIGNAL (clicked()),this, SLOT (ueberpruefen()));
+    connect(ui->abbrechen_button, SIGNAL (clicked()), this, SLOT(abgebrochen()));
 }
+
+void Verwaltung::abgebrochen()
+{
+    QDialog::close();
+}
+
+void Verwaltung::ueberpruefen()
+{
+    bool fehler = false;
+    if (ui->nachname_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keinen Nachnamen eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Nachnamen ein");
+        fehler = true;
+    }
+
+    if (ui->vorname_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keinen Vornamen eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Vornamen ein");
+        fehler = true;
+    }
+
+
+    if (ui->geschlecht_comboBox->currentText() == " ")
+    {
+        //Fehlermeldung für kein eingetragenes Geschlecht
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte ein Geschlecht auswählen");
+        fehler = true;
+    }
+
+    if (ui->tel_nr_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keine Telefonnummer eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Telefonnummer ein");
+        fehler = true;
+    }
+
+    if (ui->strasse_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keine Straße eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Straße ein");
+        fehler = true;
+    }
+
+    if (ui->hnr_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keine Hausnummer eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Hausnummer ein");
+        fehler = true;
+    }
+
+    if (ui->plz_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keine Postleitzahl eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Postleitzahl ein");
+        fehler = true;
+    }
+
+    if (ui->ort_textEdit->toPlainText().isEmpty())
+    {
+        //Fehlermeldung für keinen Ort eingetragen
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Ort ein");
+        fehler = true;
+    }
+
+    if( fehler == false)
+    {
+        save();
+    }
+}
+
 void Verwaltung::save()
 {
     QString geschl;
 
-    if (ui->geschlecht_comboBox->currentText() == " ")
-    {
-            QMessageBox fehlermeldung;
-            fehlermeldung.critical(0, "Fehler", "Bitte ein Geschlecht auswählen");
-
-    }
-    else
-    {
     if (ui->geschlecht_comboBox->currentText() == "w")
     {
         geschl = "weiblich";
@@ -88,7 +161,7 @@ void Verwaltung::save()
     }
 
     data.update_patient(patient);
-    }
+    QDialog::close();
 }
 
 void Verwaltung::patienten_editieren(int patienten_id)

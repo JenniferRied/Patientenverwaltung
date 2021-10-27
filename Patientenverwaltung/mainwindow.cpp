@@ -348,6 +348,8 @@ int MainWindow::ausgewaehlte_id()
     if (ausgewaehlt.size() == 0)
     {
         //Fehlermeldung, dass kein Patient ausgewählt wurde
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Es wurde kein Patient ausgewählt");
     }
     else if (ausgewaehlt.size() == 1)
     {
@@ -358,6 +360,8 @@ int MainWindow::ausgewaehlte_id()
     else
     {
         //Fehlermeldung mehr als ein Patient ausgewählt
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Bitte nur 1 Patienten auswählen");
     }
 
     ui->tableWidget->clearSelection();

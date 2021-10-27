@@ -19,15 +19,17 @@ public:
     ~Verwaltung();
 
 public slots:
-    void save();
     void change();
     void textchange(QString);
     void datechange(QDate);
+    void ueberpruefen();
+    void abgebrochen();
 
 private:
     Ui::Verwaltung *ui;
     void patienten_editieren(int);
     int id = 0;
+    void save();
 };
 
 #endif // VERWALTUNG_H
