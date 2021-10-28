@@ -135,11 +135,11 @@ void MainWindow::suchen_buttonclick()
 }
 
 /*die Funktion suche_starten_buttonclick löst, durch einen click auf den suche_starten_button,
-die Suche aus. Hierfür werden die einzelnen Felder des TableWidget mit den Patienteneinträgen durchlaufen.
+die Suche aus. Hierfür werden die einzelnen Felder des TableWidgets mit den Patienteneinträgen durchlaufen.
 Die Funktion überprüft zuerst nach welchen Suchkriterien gesucht werden soll. Es gibt die Suchkriterien Nachname, Vorname und Geburtsdatum.
 Der Nutzer muss mindestens eins der Suchkriterien angeben. Er kann diese allerdings beliebig kombinieren, sodass auch nach einem genauen Patienten
 mithilfe des Vor- und Nachnamen und des Geburtsdatum gesucht werden kann. In der for-Schleife werden die Tabelleneinträge geprüft und die Einträge,
-die zur Suche passen werden sich temporär gespeichert und im Anschluss, wenn die komplette Liste durchsucht wurde, werden die Treffer anstatt der ursprünglichen
+die zur Suche passen werden temporär gespeichert und im Anschluss, wenn die komplette Liste durchsucht wurde, werden die Treffer anstatt der ursprünglichen
 Liste angezeigt.*/
 void MainWindow::suche_starten_buttonclick()
 {
