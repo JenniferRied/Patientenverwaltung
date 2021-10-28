@@ -6,11 +6,15 @@
 #include <QMessageBox>
 #include <QErrorMessage>
 
+/**/
+
 Speicher& Speicher::getInstance()
 {
     static Speicher instance;
     return instance;
 }
+
+/**/
 
 void Speicher::beobachter_anhaengen(Beobachter *beobachter)
 {
@@ -20,6 +24,8 @@ void Speicher::beobachter_anhaengen(Beobachter *beobachter)
     }
 }
 
+/**/
+
 void Speicher::beobachter_abmachen(Beobachter *beobachter)
 {
     if (beobachter_patient_update.contains(beobachter))
@@ -28,15 +34,21 @@ void Speicher::beobachter_abmachen(Beobachter *beobachter)
     }
 }
 
+/**/
+
 Patient* Speicher::get_patient(int id)
 {
     return new Patient(*patienten[id]);
 }
 
+/**/
+
 QList<Patient *> Speicher::get_alle_patienten()
 {
     return patienten.values();
 }
+
+/**/
 
 void Speicher::update_patient(Patient *patient)
 {
@@ -51,6 +63,7 @@ void Speicher::update_patient(Patient *patient)
     patientenaenderung_melden();
 }
 
+/**/
 
 void Speicher::loesche_patient(int id)
 {
@@ -63,10 +76,14 @@ void Speicher::loesche_patient(int id)
     patientenaenderung_melden();
 }
 
+/**/
+
 Speicher::Speicher()
 {
     daten_laden();
 }
+
+/**/
 
 Speicher::~Speicher()
 {
@@ -76,6 +93,8 @@ Speicher::~Speicher()
     }
     patienten.clear();
 }
+
+/**/
 
 void Speicher::daten_laden()
 {
@@ -105,6 +124,8 @@ void Speicher::daten_laden()
     }
 }
 
+/**/
+
 QJsonObject Speicher::json_erstellen(QList<Patient*> patienten)
 {
     QJsonArray json_patienten;
@@ -121,6 +142,8 @@ QJsonObject Speicher::json_erstellen(QList<Patient*> patienten)
     return json;
 }
 
+/**/
+
 void Speicher::daten_speichern()
 {
     QFile patienten_datei("Patienten.json");
@@ -136,6 +159,8 @@ void Speicher::daten_speichern()
 
     patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
 }
+
+/**/
 
 void Speicher::patientenaenderung_melden()
 {

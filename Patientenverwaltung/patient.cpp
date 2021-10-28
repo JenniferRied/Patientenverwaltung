@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QString>
 
+//hier wird das Objekt Patient beschrieben
+
 Patient::Patient(QString titel, QString nachname, QString vorname,
                  QString strasse, QString ort, int hnr, int plz,
                  int patient_id, QDate geb, QString tel, QString geschlecht)
@@ -13,6 +15,8 @@ Patient::Patient(QString titel, QString nachname, QString vorname,
 {
 
 }
+
+/**/
 
 Patient* Patient::read(const QJsonObject &json)
 {
@@ -75,6 +79,8 @@ Patient* Patient::read(const QJsonObject &json)
 
     return patient;
 }
+
+/**/
 
 void Patient::write(QJsonObject &json) const
 {

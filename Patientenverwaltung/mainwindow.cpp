@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    //in dieser Funktion wird die ui des MainWindow erzeugt
     ui->setupUi(this);
 
     //Buttons im MainWindow
@@ -72,11 +73,19 @@ MainWindow::MainWindow(QWidget *parent)
     tabelle_erzeugen();
 }
 
+/*die hinzufügen_buttonclick Funktion ruft nach einem click auf den hinzufügen_button
+das Fenster "Neuer Patient" auf, indem man einen neuen Patienten hinzufügen kann*/
+
 void MainWindow::hinzufuegen_buttonclick()
 {
     Verwaltung *verw = new Verwaltung(0);
     verw->show();
 }
+
+/*die aendern_buttonclick Funktion ruft nach einem click auf den aendern_button
+das Fenster "Patient editieren" auf, indem man einen bereits bekannten Patienten editieren kann
+das Fenster "Patient editieren" ist die gleiche Maske wie beim hinzufügen eines Patienten.
+Allerdings ist dieses Fenster bereits ausgefüllt*/
 
 void MainWindow::aendern_buttonclick()
 {
@@ -90,12 +99,18 @@ void MainWindow::aendern_buttonclick()
 
 }
 
+/*die FUnktion loeschen_buttonclick, wird aufgerufen durch einen click auf den loeschen_button.
+Zunächst erscheint eine Kontrollabfrage, ob der Nutzer den markierten Patienten wirklich löschen möchte.
+Erst wenn diese Frage mit dem Button "Yes" beantwortet wird, wird der Patient gelöscht.
+Wird die Frage mit "No" beantwortet, wird der Vorgang abgebrochen*/
 void MainWindow::loeschen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
 
     if (patienten_id > 0)
     {
+        //Kontrollabfrage
+
         QMessageBox del_msgBox;
         del_msgBox.setWindowTitle("Kontrollnachfrage");
         del_msgBox.setText("Wollen Sie den Patienten wirklich löschen?");
@@ -103,6 +118,7 @@ void MainWindow::loeschen_buttonclick()
         del_msgBox.addButton(QMessageBox::No);
         del_msgBox.setDefaultButton(QMessageBox::No);
 
+        // erst bei click des "Yes"-Buttons wird gelöscht
         if(del_msgBox.exec() == QMessageBox::Yes)
         {
             Speicher::getInstance().loesche_patient(patienten_id);
@@ -110,12 +126,21 @@ void MainWindow::loeschen_buttonclick()
     }
 }
 
+/*die Funktion suchen_buttonclick macht, nach click des suchen_buttons, das Widget für die Suche sichtbar*/
+
 void MainWindow::suchen_buttonclick()
 {
     ui->suchen_widget->setVisible(true);
 
 }
 
+/*die Funktion suche_starten_buttonclick löst, durch einen click auf den suche_starten_button,
+die Suche aus. Hierfür werden die einzelnen Felder des TableWidget mit den Patienteneinträgen durchlaufen.
+Die Funktion überprüft zuerst nach welchen Suchkriterien gesucht werden soll. Es gibt die Suchkriterien Nachname, Vorname und Geburtsdatum.
+Der Nutzer muss mindestens eins der Suchkriterien angeben. Er kann diese allerdings beliebig kombinieren, sodass auch nach einem genauen Patienten
+mithilfe des Vor- und Nachnamen und des Geburtsdatum gesucht werden kann. In der for-Schleife werden die Tabelleneinträge geprüft und die Einträge,
+die zur Suche passen werden sich temporär gespeichert und im Anschluss, wenn die komplette Liste durchsucht wurde, werden die Treffer anstatt der ursprünglichen
+Liste angezeigt.*/
 void MainWindow::suche_starten_buttonclick()
 {
     QString vorname = ui->vorname_lineEdit->text();
@@ -222,6 +247,9 @@ void MainWindow::suche_starten_buttonclick()
             ui->tableWidget->setRowHidden( i, !treffer);
             kein_treffer.append(*ui->tableWidget->item( i, !treffer));
         }
+
+    //Fehlermeldung, falls der Nutzer versucht die Suche zu starten ohne ein Suchkriterium eingegeben zu haben
+
     if(keine_eingabe == true)
     {
         QMessageBox fehlermeldung;
@@ -230,6 +258,9 @@ void MainWindow::suche_starten_buttonclick()
 
 }
 
+/*durch einen click auf den suche_beenden_button wird die Funktion suche_beenden_buttonclick aufgerufen.
+In dieser Funktion werden die eingaben der Suchkriterien aus den dementsprechenden Felder gelöscht und
+das Suchen Widget wieder versteckt. Danach wird wieder die gesamte Liste der Patienten angezeigt*/
 
 void MainWindow::suche_beenden_buttonclick()
 {
@@ -243,6 +274,8 @@ void MainWindow::suche_beenden_buttonclick()
     }
     tabelle_erzeugen();
 }
+
+/**/
 
 void MainWindow::export_buttonclick()
 {
@@ -285,6 +318,9 @@ void MainWindow::export_buttonclick()
     }
 }
 
+
+/**/
+
 void MainWindow::anzeigen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
@@ -302,6 +338,8 @@ void MainWindow::anzeigen_buttonclick()
     }
 }
 
+/**/
+
 void MainWindow::anzeige_schliessen_buttonclick()
 {
     ui->widget->setVisible(false);
@@ -313,10 +351,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**/
+
 void MainWindow::patient_updated()
 {
     tabelle_erzeugen();
 }
+
+/**/
 
 void MainWindow::tabelle_erzeugen()
 {
@@ -355,6 +397,8 @@ void MainWindow::tabelle_erzeugen()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(0, 30);
 }
+
+/**/
 
 int MainWindow::ausgewaehlte_id()
 {

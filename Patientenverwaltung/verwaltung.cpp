@@ -7,18 +7,21 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 
+/*In dieser Funktion wird die Verwaltungs ui erstellt*/
 Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Verwaltung)
 {
     ui->setupUi(this);
 
+    //Vorgabe, dass die Telefonnummer nur aus Zahlen besteht und eine führende 0 besitzt
     QRegExp rx_tel("[0]{1}\\d{1,20}");
     rx_tel.setCaseSensitivity(Qt::CaseInsensitive);
     QValidator *tel_validator = new QRegExpValidator(rx_tel, this);
     ui->tel_nr_lineEdit->setValidator(tel_validator);
     ui->tel_nr_lineEdit->setMaxLength(21);
 
+    //Vorgabe Postleitzahl besteht aus maximal 5 Zahlen
     QRegExp rx_plz("[0-9]{5}");
     QValidator *plz_validator = new QRegExpValidator(rx_plz, this);
     ui->plz_lineEdit->setValidator(plz_validator);
@@ -31,12 +34,14 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     geschlecht.append("d");
     ui->geschlecht_comboBox->addItems(geschlecht);
 
+    //setzt die Überschrift des Fensters
     if (patienten_id > 0) {
         setWindowTitle("Patient editieren");
         patienten_editieren(patienten_id);
     } else {
         setWindowTitle("Neuer Patient");
     }
+
 
     connect(ui->geb_dateEdit, SIGNAL (dateChanged(QDate)), this, SLOT (datechange(QDate)));
     connect(ui->titel_lineEdit, SIGNAL (textChanged(QString)), this , SLOT (change()));
@@ -52,10 +57,15 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     connect(ui->abbrechen_button, SIGNAL (clicked()), this, SLOT(abgebrochen()));
 }
 
+//Diese Funktion bricht den Vorgang des hinzufügen oder ändern eines Patiente ab und schließt das Fenster wieder
+
 void Verwaltung::abgebrochen()
 {
     QDialog::close();
 }
+
+/*In dieser Funktion werden die Eingaben überprüft und gegebenenfalls Fehlermeldungen ausgegeben.
+Erst wenn alle Eingaben gültig sind und alle Pflichtfelder vorhanden ist wird der Patient gespeichert*/
 
 void Verwaltung::ueberpruefen()
 {
@@ -93,6 +103,8 @@ void Verwaltung::ueberpruefen()
     {
         fehlerhafte_eingabe = true;
     }
+
+    //Fehlermeldungen für fehlende Eingaben
 
     if (ui->nachname_lineEdit->text().isEmpty())
     {
@@ -151,13 +163,6 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-    if (ui->plz_lineEdit->text().length() != 5)
-    {
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Die Postleitzahl hat weniger als 5 Ziffern.");
-        fehler = true;
-    }
-
     if (ui->ort_lineEdit->text().isEmpty())
     {
         //Fehlermeldung für keinen Ort eingetragen
@@ -165,6 +170,16 @@ void Verwaltung::ueberpruefen()
         fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Ort ein");
         fehler = true;
     }
+
+    //Fehlermeldung falls die Postleitzahl kürzer als 5 ist
+    if (ui->plz_lineEdit->text().length() != 5)
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Die Postleitzahl hat weniger als 5 Ziffern.");
+        fehler = true;
+    }
+
+
 
     if(fehlerhafte_eingabe == true)
     {
@@ -174,9 +189,12 @@ void Verwaltung::ueberpruefen()
     }
     if( fehler == false)
     {
+        //wird erst bei gültigen und vollständigen Eingaben ausgeführt
         save();
     }
 }
+
+/**/
 
 void Verwaltung::save()
 {
@@ -224,6 +242,9 @@ void Verwaltung::save()
     QDialog::close();
 }
 
+/*Der Funktion patienten_editieren wird die patienten_id übergeben. Mit der id kann der genaue patient identifiziert werden.
+Passend zu dem Patient werden die vorhandenen Felder ausgefüllt.*/
+
 void Verwaltung::patienten_editieren(int patienten_id)
 {
     Patient* patient = Speicher::getInstance().get_patient(patienten_id);
@@ -252,15 +273,22 @@ void Verwaltung::patienten_editieren(int patienten_id)
     id = patienten_id;
 }
 
+//sobald die Eingabe des Geburtsdatums ändert wird die Funktion change aufgerufen
+
 void Verwaltung::datechange(QDate)
 {
     change();
 }
 
+//sobald die Eingabe des Geschlechts ändert wird die Funktion change aufgerufen
+
 void Verwaltung::textchange(QString)
 {
     change();
 }
+
+/*Diese Funktion wird aufgerufen sobald sich eine der Eingaben verändert. Die aktuellen Eingaben werden dynamisch zur Eingabe rechts
+in dem Fenster angezeigt, dies soll die Überprüfung der eingegebenen Daten erleichtern. Neben dem Geburtsdatum steht in Klammern das Alter des Patienten.*/
 
 void Verwaltung::change()
 {
@@ -323,7 +351,7 @@ void Verwaltung::change()
 }
 
 
-
+//
 Verwaltung::~Verwaltung()
 {
     delete ui;
