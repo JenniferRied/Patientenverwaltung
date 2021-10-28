@@ -14,7 +14,7 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Vorgabe, dass die Telefonnummer nur aus Zahlen besteht und eine führende 0 besitzt
+    //Vorgabe, dass die Telefonnummer nur aus Zahlen besteht und eine führende 0 besitzt und maximal 21 Ziffern lang ist
     QRegExp rx_tel("[0]{1}\\d{1,20}");
     rx_tel.setCaseSensitivity(Qt::CaseInsensitive);
     QValidator *tel_validator = new QRegExpValidator(rx_tel, this);
