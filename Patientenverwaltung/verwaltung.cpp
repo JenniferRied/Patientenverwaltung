@@ -264,14 +264,14 @@ void Verwaltung::patienten_editieren(int patienten_id)
     QString geschlecht = patient->get_geschlecht();
     if (geschlecht == "weiblich")
     {
-        ui->geschlecht_comboBox->setCurrentIndex(2);
+        ui->geschlecht_comboBox->setCurrentIndex(1);
     }
     else if (geschlecht == "männlich")
     {
-        ui->geschlecht_comboBox->setCurrentIndex(3);
+        ui->geschlecht_comboBox->setCurrentIndex(2);
     }
     else if (geschlecht == "divers") {
-        ui->geschlecht_comboBox->setCurrentIndex(4);
+        ui->geschlecht_comboBox->setCurrentIndex(3);
     }
     id = patienten_id;
 }
