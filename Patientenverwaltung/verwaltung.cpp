@@ -7,7 +7,8 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 
-/*In dieser Funktion wird die Verwaltungs ui erstellt*/
+/*In dieser Funktion wird die Verwaltungs ui erstellt(Konstruktor).*/
+
 Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Verwaltung)
@@ -57,7 +58,7 @@ Verwaltung::Verwaltung(int patienten_id, QWidget *parent) :
     connect(ui->abbrechen_button, SIGNAL (clicked()), this, SLOT(abgebrochen()));
 }
 
-//Diese Funktion bricht den Vorgang des hinzufügen oder ändern eines Patiente ab und schließt das Fenster wieder
+//Diese Funktion bricht den Vorgang des hinzufügen oder ändern eines Patiente ab und schließt das Fenster wieder.
 
 void Verwaltung::abgebrochen()
 {
@@ -194,7 +195,9 @@ void Verwaltung::ueberpruefen()
     }
 }
 
-/**/
+/*diese Funktion erstellt einen neuen Patienten mit den Eingaben des Benutzers. Wurde der Patient bearbeitet behält er seine id,
+wenn er ein neues Patient ist, wird die höchste Patienten_Id herausgefunden, um eins erhöht und dem Patienten zugewiesen.
+Dann wird der Patient im internen Speicher gespeichert mit dem Aufruf update_patient.*/
 
 void Verwaltung::save()
 {
@@ -273,14 +276,14 @@ void Verwaltung::patienten_editieren(int patienten_id)
     id = patienten_id;
 }
 
-//sobald die Eingabe des Geburtsdatums ändert wird die Funktion change aufgerufen
+//sobald die Eingabe des Geburtsdatums ändert wird die Funktion change aufgerufen.
 
 void Verwaltung::datechange(QDate)
 {
     change();
 }
 
-//sobald die Eingabe des Geschlechts ändert wird die Funktion change aufgerufen
+//sobald die Eingabe des Geschlechts ändert wird die Funktion change aufgerufen.
 
 void Verwaltung::textchange(QString)
 {
@@ -351,7 +354,8 @@ void Verwaltung::change()
 }
 
 
-//
+// Der Destruktor der Klasse Verwaltung.
+
 Verwaltung::~Verwaltung()
 {
     delete ui;

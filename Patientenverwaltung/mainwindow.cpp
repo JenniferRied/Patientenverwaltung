@@ -103,6 +103,7 @@ void MainWindow::aendern_buttonclick()
 Zunächst erscheint eine Kontrollabfrage, ob der Nutzer den markierten Patienten wirklich löschen möchte.
 Erst wenn diese Frage mit dem Button "Yes" beantwortet wird, wird der Patient gelöscht.
 Wird die Frage mit "No" beantwortet, wird der Vorgang abgebrochen*/
+
 void MainWindow::loeschen_buttonclick()
 {
     int patienten_id = ausgewaehlte_id();
@@ -141,6 +142,7 @@ Der Nutzer muss mindestens eins der Suchkriterien angeben. Er kann diese allerdi
 mithilfe des Vor- und Nachnamen und des Geburtsdatum gesucht werden kann. In der for-Schleife werden die Tabelleneinträge geprüft und die Einträge,
 die zur Suche passen werden temporär gespeichert und im Anschluss, wenn die komplette Liste durchsucht wurde, werden die Treffer anstatt der ursprünglichen
 Liste angezeigt.*/
+
 void MainWindow::suche_starten_buttonclick()
 {
     QString vorname = ui->vorname_lineEdit->text();
@@ -275,7 +277,8 @@ void MainWindow::suche_beenden_buttonclick()
     tabelle_erzeugen();
 }
 
-/**/
+/*Diese Funktion erstellt aus den ausgewählten Zeilen aus der ui eine json-Datei.
+Wenn bereits die json-Datei existiert wird abgefragt, ob man die Datei überschreiben möchte.*/
 
 void MainWindow::export_buttonclick()
 {
@@ -302,24 +305,29 @@ void MainWindow::export_buttonclick()
         del_msgBox.addButton(QMessageBox::No);
         del_msgBox.setDefaultButton(QMessageBox::No);
 
-        if(del_msgBox.exec() == QMessageBox::Yes)
+        if(del_msgBox.exec() == QMessageBox::No)
         {
-            if (!patienten_datei.open(QIODevice::WriteOnly))
-            {
-                //Json-Datei nicht erfolgreich geöffnet
-                return;
-            }
-
-            QJsonObject json = Speicher::getInstance().json_erstellen(patienten);
-            patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
-            ui->tableWidget->clearSelection();
-            // erfolgreich in datei gespeichert
+            return;
         }
     }
+
+    if (!patienten_datei.open(QIODevice::WriteOnly))
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Ein Fehler beim Öffnen der Datei ist aufgetreten.");
+        return;
+    }
+
+    QJsonObject json = Speicher::getInstance().json_erstellen(patienten);
+    patienten_datei.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
+    ui->tableWidget->clearSelection();
+
+    QMessageBox erfolgsmeldung;
+    erfolgsmeldung.information(0, "Erfolg gespeichert", "Die Speicherung ist erfolgreich vonstattengegangen.");
 }
 
 
-/**/
+/*Wenn der Anzeige-Button geklickt wird, wird das Anzeige-Widget sichtbar gemacht und der in der Tabelle ausgewählte Patient in dem Label des Widgets angezeigt.*/
 
 void MainWindow::anzeigen_buttonclick()
 {
@@ -338,7 +346,7 @@ void MainWindow::anzeigen_buttonclick()
     }
 }
 
-/**/
+/*Wenn der Button in dem Anzeige-Widget geklickt wird, wird dieses Widget wieder unsichtbar gemacht und das Label geleert.*/
 
 void MainWindow::anzeige_schliessen_buttonclick()
 {
@@ -346,19 +354,22 @@ void MainWindow::anzeige_schliessen_buttonclick()
     ui->anzeige_label->setText("");
 }
 
+/*Der Destruktor der MainWindow Klasse.*/
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-/**/
+/*Wenn ein Patient geupdated wurde, wird diese Funktion aufrufen, die das neu erstellen der Tabelle aufruft.*/
 
 void MainWindow::patient_updated()
 {
     tabelle_erzeugen();
 }
 
-/**/
+/*Diese Funktion erzeugt die Tabelle. Es gibt 5 Spalten und genau soviele Zeilen wie es Patienten gibt.
+Die Tabelle passt sich dynamisch der Fenstergröße an, wobei die ID-Spalte eine festgelegte Spaltenbreite hat.*/
 
 void MainWindow::tabelle_erzeugen()
 {
@@ -398,7 +409,9 @@ void MainWindow::tabelle_erzeugen()
     ui->tableWidget->setColumnWidth(0, 30);
 }
 
-/**/
+/*Diese Funktion überprüft, wie viele Zeilen in der Tablle ausgewählt sind.
+Sind mehr als eins oder gar keine ausgewählt, gibt es eine Fehlermeldung,
+da sie nur von Funktionen aufgerufen wird, in der nur ein Patient ausgwählt werden darf.*/
 
 int MainWindow::ausgewaehlte_id()
 {
