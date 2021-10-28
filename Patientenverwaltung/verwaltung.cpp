@@ -71,6 +71,7 @@ Erst wenn alle Eingaben gültig sind und alle Pflichtfelder vorhanden ist wird d
 void Verwaltung::ueberpruefen()
 {
     bool fehler = false;
+    QString fehler_felder = "Folgende Felder wurden nicht ausfüllt: \n";
 
     bool fehlerhafte_eingabe = false;
 
@@ -109,66 +110,50 @@ void Verwaltung::ueberpruefen()
 
     if (ui->nachname_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keinen Nachnamen eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Nachnamen ein");
+        fehler_felder += "  Nachname \n";
         fehler = true;
     }
 
     if (ui->vorname_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keinen Vornamen eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Vornamen ein");
+        fehler_felder += "  Vorname \n";
         fehler = true;
     }
 
 
     if (ui->geschlecht_comboBox->currentText() == " ")
     {
-        //Fehlermeldung für kein eingetragenes Geschlecht
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte ein Geschlecht auswählen");
+        fehler_felder += "  Geschlecht \n";
         fehler = true;
     }
 
     if (ui->tel_nr_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keine Telefonnummer eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Telefonnummer ein");
+        fehler_felder += "  Telefonnummer \n";
         fehler = true;
     }
 
     if (ui->strasse_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keine Straße eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Straße ein");
+        fehler_felder += "  Straße \n";
         fehler = true;
     }
 
     if (ui->hnr_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keine Hausnummer eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Hausnummer ein");
+        fehler_felder += "  Hausnummer \n";
         fehler = true;
     }
 
     if (ui->plz_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keine Postleitzahl eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie die Postleitzahl ein");
+        fehler_felder += "  Postleitzahl \n";
         fehler = true;
     }
 
     if (ui->ort_lineEdit->text().isEmpty())
     {
-        //Fehlermeldung für keinen Ort eingetragen
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Bitte tragen sie den Ort ein");
+        fehler_felder += "  Ort \n";
         fehler = true;
     }
 
@@ -180,8 +165,6 @@ void Verwaltung::ueberpruefen()
         fehler = true;
     }
 
-
-
     if(fehlerhafte_eingabe == true)
     {
         QMessageBox fehlermeldung;
@@ -192,6 +175,11 @@ void Verwaltung::ueberpruefen()
     {
         //wird erst bei gültigen und vollständigen Eingaben ausgeführt
         save();
+    }
+    else
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", fehler_felder);
     }
 }
 

@@ -285,6 +285,12 @@ void MainWindow::export_buttonclick()
     QList<Patient*> patienten;
     QList<QTableWidgetSelectionRange> ausgewaehlte_zeilen = ui->tableWidget->selectedRanges();
 
+    if (ausgewaehlte_zeilen.size() == 0)
+    {
+        QMessageBox fehlermeldung;
+        fehlermeldung.critical(0, "Fehler", "Es wurde kein Patient ausgewählt.");
+        return;
+    }
 
     for (int i = 0; i < ausgewaehlte_zeilen.size(); i++)
     {
@@ -323,7 +329,7 @@ void MainWindow::export_buttonclick()
     ui->tableWidget->clearSelection();
 
     QMessageBox erfolgsmeldung;
-    erfolgsmeldung.information(0, "Erfolg gespeichert", "Die Speicherung ist erfolgreich vonstattengegangen.");
+    erfolgsmeldung.information(0, "Erfolgreich gespeichert", "Die Speicherung ist erfolgreich vonstattengegangen.");
 }
 
 
