@@ -158,11 +158,15 @@ void Verwaltung::ueberpruefen()
     }
 
     //Fehlermeldung falls die Postleitzahl kürzer als 5 ist
+
     if (ui->plz_lineEdit->text().length() != 5)
     {
-        QMessageBox fehlermeldung;
-        fehlermeldung.critical(0, "Fehler", "Die Postleitzahl hat weniger als 5 Ziffern.");
-        fehler = true;
+        if (ui->plz_lineEdit->text().length() > 0)
+        {
+            QMessageBox fehlermeldung;
+            fehlermeldung.critical(0, "Fehler", "Die Postleitzahl hat weniger als 5 Ziffern.");
+            fehler = true;
+        }
     }
 
     if(fehlerhafte_eingabe == true)
